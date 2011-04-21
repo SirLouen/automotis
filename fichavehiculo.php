@@ -9,6 +9,31 @@
 
  */
  
+ // Extensiones validas
+ $extensions = array('jpg','jpeg','gif','png','bmp');
+ $matricula = $_GET['matricula'];
+
+ $folder_image_name = "/webdms/imagenes/$matricula/";
+ $images_folder_path = $_SERVER['DOCUMENT_ROOT'].$folder_image_name;
+ $url_to_folder = 'http://'.$_SERVER["SERVER_NAME"].$folder_image_name;
+
+ $images = array();
+
+ // Introducir las imagenes en un array
+ if ($handle = opendir($images_folder_path)) {
+    while (false !== ($file = readdir($handle))) {
+        if ($file != "." && $file != "..") {
+
+          $ext = strtolower(substr(strrchr($file, "."), 1));
+                
+          if(in_array($ext, $extensions)){
+            $images[] = $file;
+          }
+        }
+    }
+	closedir($handle);
+ }
+ 
  
  $matricula = $_GET['matricula'];
  
@@ -31,7 +56,7 @@
 		
 			<table style="text-align: left; width: 800px;" border="1" cellpadding="2" cellspacing="2">
 				<tr>
-					<td colspan="2" rowspan="6" style="vertical-align: top; width: 320px;"><img style="width: 330px; height: 240px;" alt="" src="./imagenes/<? echo $matricula; ?>/1.jpg"><br></td>
+					<td colspan="2" rowspan="6" style="vertical-align: top; width: 320px;"><a target="_blank" href="imagenes.php?i=0&amp;matricula=<?php echo $matricula;?>"><img style="width: 330px; height: 240px;" alt="" src="./imagenes/<? echo $matricula; ?>/<? echo $images['0'];?>"></a><br></td>
 					<td style="vertical-align: top;"><?php echo $lang_file_matricula.': '.$matricula; ?><br></td>
 				</tr>
 				<tr>
@@ -55,8 +80,8 @@
 					?><br></td>
 				</tr>
 				<tr>
-					<td colspan="1" rowspan="3" style="vertical-align: top; width: 160px;"><img style="width: 160px; height: 120px;" alt="" src="./imagenes/<? echo $matricula; ?>/2.jpg"><br></td>
-					<td colspan="1" rowspan="3" style="vertical-align: top; width: 160px;"><img style="width: 160px; height: 120px;" alt="" src="./imagenes/<? echo $matricula; ?>/3.jpg"><br></td>
+					<td colspan="1" rowspan="3" style="vertical-align: top; width: 160px;"><a target="_blank" href="imagenes.php?i=1&amp;matricula=<?php echo $matricula;?>"><img style="width: 160px; height: 120px;" alt="" src="./imagenes/<? echo $matricula; ?>/<? echo $images['1'];?>"></a><br></td>
+					<td colspan="1" rowspan="3" style="vertical-align: top; width: 160px;"><a target="_blank" href="imagenes.php?i=2&amp;matricula=<?php echo $matricula;?>"><img style="width: 160px; height: 120px;" alt="" src="./imagenes/<? echo $matricula; ?>/<? echo $images['2'];?>"></a><br></td>
 					<td style="vertical-align: top;"><?php echo $lang_file_combustible.': '.$combustible; ?><br></td>
 				</tr>
 				<tr>
@@ -66,11 +91,11 @@
 					<td style="vertical-align: top;"><?php echo $lang_file_cilindrada.': '.$cilindrada; ?><br></td>
 				</tr>
 				<tr>
-					<td colspan="2" rowspan="1" style="vertical-align: top; width: 320px;"><?php echo $lang_file_extras; ?><br></td>
-					<td style="vertical-align: top;"><?php echo $lang_file_carroceria.': '.$carroceria; ?><br></td>
+					<td colspan="2" rowspan="1" style="vertical-align: middle; width: 320px; height: 40px;"><?php echo $lang_file_extras; ?><br></td>
+					<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_carroceria.': '.$carroceria; ?><br></td>
 				</tr>
 				<tr>
-					<td colspan="2" rowspan="4" heistyle="vertical-align: top; width: 320px; height: 160px;"><?php echo $extras; ?><br></td>
+					<td colspan="2" rowspan="4" style="vertical-align: middle; width: 320px; height: 160px;"><?php echo $extras; ?><br></td>
 					<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_color.': '.$color; ?><br></td>
 				</tr>
 				<tr>

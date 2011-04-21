@@ -14,6 +14,7 @@ $base="webdms";
 $host="localhost";
 $user="trial";
 $password="trial";
+$pass="trial";
 
 include("lang/$lang.php");
 
