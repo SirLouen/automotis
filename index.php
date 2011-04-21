@@ -37,21 +37,29 @@ else
 	} 
 	else 
 	{
-		echo ("$lang_index_welcome<br>");
-		echo ("$lang_index_buscador");
-
-		include("buscador.php");
-	
-		if($_SESSION['nivelusuario'] >= 2)
+		if ($_GET['matricula'])
 		{
-			echo("
-			<p>
-				$lang_index_admin_menu:<br>
-				En construccion: <a href='estadisticas.php'>Estadisticas</a>
-			</p>	
-			");
+			include("fichavehiculo.php");
 		}
 		
+		else
+		{
+			echo ("$lang_index_welcome<br><br>");
+			echo ("<center>$lang_index_buscador</center><br>");
+
+			include("buscador.php");
+	
+			if($_SESSION['nivelusuario'] >= 2)
+			{
+				echo("
+				<p>
+					$lang_index_admin_menu:<br>
+					En construccion: <a href='estadisticas.php'>Estadisticas</a>
+				</p>	
+				");
+			}
+		}
+
 		include("footer.php");
 	}
 }

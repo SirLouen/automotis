@@ -12,13 +12,17 @@
 
 <form method='post' action='?'>
   <table border="0" align="center" cellpadding="4" cellspacing="0">
-    <tr> 
-      <td>Marca</td>
-      <td><input name="marca" type="text" id="marca"></td>
+  	<tr> 
+      <td><? echo $lang_find_matricula; ?></td>
+      <td><input name="matricula" type="text" id="matricula" value="%"></td>
     </tr>
     <tr> 
-      <td>Modelo</td>
-      <td><input name="modelo" type="text" id="modelo"></td>
+      <td><? echo $lang_find_marca; ?></td>
+      <td><input name="marca" type="text" id="marca" value="%"></td>
+    </tr>
+    <tr> 
+      <td><? echo $lang_find_modelo; ?></td>
+      <td><input name="modelo" type="text" id="modelo" value="%"></td>
     </tr>
     <tr> 
       <td>&nbsp;</td>
@@ -26,3 +30,45 @@
     </tr>
   </table>
 </form>
+
+<?
+
+if (isset ($_POST['submit'])) 
+{
+	$matricula = $_POST['matricula'];
+	$marca = $_POST['marca'];
+	$modelo = $_POST['modelo'];	
+	
+	$sql = mysql_query("SELECT * FROM vehiculos WHERE ((matricula LIKE '$matricula') 
+			AND (marca LIKE '$marca') AND (modelo LIKE '$modelo'))");
+		
+	$login_check = mysql_num_rows($sql);
+	
+	if($login_check > 0)
+	{
+		echo "<table border='1' align='center' cellpadding='4' cellspacing='0''>";
+		echo "<tr>";
+		echo "<td>".$lang_find_matricula."</td><td>".$lang_find_marca."</td><td>".$lang_find_modelo."</td>";
+		echo "</tr>";
+				
+		while($row = mysql_fetch_array($sql))
+		{
+			echo "<tr>";
+			
+			foreach( $row AS $key => $val )
+			{
+				$$key = stripslashes( $val );
+			}	
+			echo "<td><a href='index.php?matricula=$matricula'>$matricula</a></td><td>$marca</td><td>$modelo</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+	}
+	else 
+	{
+		echo "$lang_find_fail<br />";
+	}
+	
+}
+
+?>

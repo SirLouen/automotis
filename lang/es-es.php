@@ -31,5 +31,33 @@
  
  $lang_config_bderror = "Imposible conectar a la Base de datos";
  
+ // BUSCADOR.PHP
+ 
+ $lang_find_matricula = "Matricula";
+ $lang_find_marca = "Marca";
+ $lang_find_modelo = "Modelo";
+ 
+ $lang_find_fail = "No se han encontrado vehiculos con esa seleccion";
+ 
+ // FICHAVEHICULO.PHP
+ 
+ $lang_file_fail = "Error desconocido en la seleccion del vehiculo, vuelva a intentarlo";
+ $lang_file_matricula = "Matricula";
+ $lang_file_marca = "Marca";
+ $lang_file_modelo = "Modelo";
+ $lang_file_kilometros = "Kilometros";
+ $lang_file_fechamatric = "Fecha Matriculacion";
+ $lang_file_pvd = "PVD";
+ $lang_file_pvp = "PVP";
+ $lang_file_combustible = "Combustible";
+ $lang_file_potencia = "Potencia";
+ $lang_file_cilindrada = "Cilindrada";
+ $lang_file_carroceria = "Carroceria";
+ $lang_file_color = "Color";
+ $lang_file_ubicacion = "Ubicacion";
+ $lang_file_categoria = "Categoria";
+ $lang_file_usoanterior = "Uso Anterior";
+ $lang_file_extras = "Extras";
+ 
  
 ?>
