@@ -59,5 +59,11 @@
  $lang_file_usoanterior = "Uso Anterior";
  $lang_file_extras = "Extras";
  
+ // CARGADOR.PHP
+ 
+ $lang_loader_fail = "No tiene acceso a esta pagina";
+ $lang_loader_mensajeemail = "La carga del fichero de VO se ha realizado correctamente";
+ $lang_loader_asuntoemail = "Carga VO Correcta";
+ 
  
 ?>

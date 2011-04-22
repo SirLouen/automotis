@@ -11,7 +11,7 @@
  */
 
 // Extensiones validas
-$extensions = array('jpg','jpeg','gif','png','bmp');
+$extensions = array('jpg','jpeg','gif','png','bmp','JPG');
 $matricula = $_GET['matricula'];
 
 $folder_image_name = "/webdms/imagenes/$matricula/";

@@ -13,6 +13,7 @@
 session_start();
 
 include("config.php");
+include("include/gen_functions.php");
 include("lang/$lang.php");
 include("header.php");
 

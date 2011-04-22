@@ -10,7 +10,7 @@
  */
  
  // Extensiones validas
- $extensions = array('jpg','jpeg','gif','png','bmp');
+ $extensions = array('jpg','jpeg','gif','png','bmp','JPG');
  $matricula = $_GET['matricula'];
 
  $folder_image_name = "/webdms/imagenes/$matricula/";
@@ -69,7 +69,7 @@
 					<td style="vertical-align: top;"><?php echo $lang_file_kilometros.': '.$kilometros; ?><br></td>
 				</tr>
 				<tr>
-					<td style="vertical-align: top;"><?php echo $lang_file_fechamatric.': '.$fechamatric; ?><br></td>
+					<td style="vertical-align: top;"><?php echo $lang_file_fechamatric.': '.fecha_normal($fechamatric); ?><br></td>
 				</tr>
 				<tr>
 					<td style="vertical-align: top;"><?php

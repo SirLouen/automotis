@@ -15,6 +15,7 @@ $host="localhost";
 $user="trial";
 $password="trial";
 $pass="trial";
+$adminemail = "mcamargo@peugeotcadiz.com";
 
 include("lang/$lang.php");
 
