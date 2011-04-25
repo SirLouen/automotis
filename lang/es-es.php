@@ -20,6 +20,7 @@
  $lang_index_logout = "Has abandonado el sistema con exito";
  $lang_index_back = "De vuelta al Inicio";
  $lang_index_buscador = "Buscador de Coches";
+ $lang_index_tasacion = "Creador de Tasaciones";
 
 
 // LOGIN.PHP
@@ -58,6 +59,7 @@
  $lang_file_categoria = "Categoria";
  $lang_file_usoanterior = "Uso Anterior";
  $lang_file_extras = "Extras";
+ $lang_file_garantia = "Garantia";
  
  // CARGADOR.PHP
  

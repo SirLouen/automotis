@@ -46,6 +46,12 @@ else
 		else
 		{
 			echo ("$lang_index_welcome<br><br>");
+			
+			if ($_SESSION['nivelusuario'] >= 3)
+			{
+				include("consultatasacion.php");
+			}
+			
 			echo ("<center>$lang_index_buscador</center><br>");
 
 			include("buscador.php");

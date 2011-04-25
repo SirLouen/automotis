@@ -28,5 +28,18 @@ function fecha_mysql($fecha)
     $lafecha=$mifecha[3]."-".$mifecha[2]."-".$mifecha[1];
     return $lafecha;
 } 
+
+//Esta función convierte la fecha del formato DATETIME de SQL
+//a formato DD-MM-YYYY HH:mm:ss
+
+// Saca fecha de DATETIME
+
+function convertir_fecha_normal($fecha_datetime)
+{	
+	$date_array = explode("-", $fecha_datetime);
+	$day = $date_array[2];
+	$day = $day[0].$day[1];
+	return $day.'/'.$date_array[1].'/'.$date_array[0];
+}
  
 ?>

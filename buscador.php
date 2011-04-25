@@ -63,7 +63,7 @@ if (isset ($_POST['submit']))
 			}	
 			echo "<td style='vertical-align: top; width: 80px; height: 60px''>
 			<a href='index.php?matricula=".$matricula."'>
-			<img style='width: 80px; height: 60px;' alt='' src='./imagenes/".$matricula."/1.jpg''>
+			<img style='width: 80px; height: 60px;' alt='' src='./imagenes/".$matricula."/1.jpg'>
 			</a></td><td><a href='index.php?matricula=".$matricula."'>$matricula</a></td>
 			<td>$marca</td><td>$modelo</td>";
 			

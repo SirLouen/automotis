@@ -58,7 +58,7 @@ if (isset ($_POST['submit']))
 				$$key = stripslashes( $val );
 			}	
 			// Registramos Varibles de Sesion
-			session_register('identificador');
+			session_register('userid');
 			$_SESSION['userid'] = $userid;
 			session_register('nombre');
 			$_SESSION['nombre'] = $nombre;
