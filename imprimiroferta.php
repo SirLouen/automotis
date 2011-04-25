@@ -106,7 +106,7 @@ $html[$i] = "
 		<td colspan='2' rowspan='1' style=' background-color: silver;'>".$arrayconcesionario['telefono']."</td>
 	</tr>
 	<tr>
-		<td colspan='2' rowspan='6'><img style='width: 192px; height: 144px;' alt='' src='./imagenes/".$arrayvehiculo['matricula']."/1.jpg'></td>
+		<td colspan='2' rowspan='6'><img style='width: 192px; height: 144px;' alt='' src='./imagenes/".$arrayvehiculo['matricula']."/tn/1.jpg'></td>
 		<td colspan='2' rowspan='1'>Nombre Vendedor: ".$arrayusuario['nombre']."</td>
 	</tr>
 	<tr>

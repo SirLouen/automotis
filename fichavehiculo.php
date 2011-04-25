@@ -174,7 +174,7 @@
 			
 				<table style="text-align: left; width: 800px;" border="1" cellpadding="2" cellspacing="2">
 					<tr>
-						<td colspan="2" rowspan="6" style="vertical-align: top; width: 320px;"><a target="_blank" href="imagenes.php?i=0&amp;matricula=<?php echo $matricula;?>"><img style="width: 330px; height: 240px;" alt="" src="./imagenes/<? echo $matricula; ?>/<? echo $images['0'];?>"></a><br></td>
+						<td colspan="2" rowspan="6" style="vertical-align: top; width: 320px;"><a target="_blank" href="imagenes.php?i=0&amp;matricula=<?php echo $matricula;?>"><img style="width: 330px; height: 240px;" alt="" src="./imagenes/<? echo $matricula; ?>/tn/1.jpg"></a><br></td>
 						<td style="vertical-align: top;"><?php echo $lang_file_matricula.': '.$matricula; ?><br></td>
 					</tr>
 					<tr>
