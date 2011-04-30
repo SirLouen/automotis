@@ -37,6 +37,12 @@
  $lang_find_matricula = "Matricula";
  $lang_find_marca = "Marca";
  $lang_find_modelo = "Modelo";
+ $lang_find_diasstock = "Dias";
+ $lang_find_fechamatric = "Fecha Matriculacion";
+ $lang_find_kilometros = "Kilometros";
+ $lang_find_precio = "Precio Entre";
+ $lang_find_importe = "Precio";
+ $lang_find_combustible = "Combustible";
  
  $lang_find_fail = "No se han encontrado vehiculos con esa seleccion";
  

@@ -25,7 +25,7 @@ function fecha_normal($fecha)
 function fecha_mysql($fecha)
 {
     ereg( "([0-9]{1,2})/([0-9]{1,2})/([0-9]{2,4})", $fecha, $mifecha);
-    $lafecha=$mifecha[3]."-".$mifecha[2]."-".$mifecha[1];
+    $lafecha=$mifecha[3]."-".$mifecha[1]."-".$mifecha[2];
     return $lafecha;
 } 
 
