@@ -10,12 +10,14 @@
 
  */
 
+
 session_start();
 
+//include("topheader.php");
 include("config.php");
 include("include/gen_functions.php");
 include("lang/$lang.php");
-include("header.php");
+
 
 if(isset($_REQUEST['exit']))
 {
@@ -32,9 +34,7 @@ else
 {
 	if($_SESSION['nivelusuario'] < 1)
 	{
-		echo("<center>$lang_index_ident:</center><br>");
-		include("login.php"); 
-		return; 
+		include("login.php");  
 	} 
 	else 
 	{

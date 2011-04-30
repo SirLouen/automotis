@@ -8,27 +8,7 @@
  * under certain conditions; Read README file for more information
 
  */
-?>
-
-<form method='post' action='?'>
-  <table width="25%" border="0" align="center" cellpadding="4" cellspacing="0">
-    <tr> 
-      <td width="22%">Usuario</td>
-      <td width="78%"><input name="user" type="text" id="usuario"></td>
-    </tr>
-    <tr> 
-      <td>Contrase&ntilde;a</td>
-      <td><input name="password" type="password" id="password"></td>
-    </tr>
-    <tr> 
-      <td>&nbsp;</td>
-      <td><input type="submit" name="submit" value="OK"></td>
-    </tr>
-  </table>
-</form>
-
-<?
-
+ 
 if (isset ($_POST['submit'])) 
 {
 
@@ -73,7 +53,6 @@ if (isset ($_POST['submit']))
 		
 			mysql_query("UPDATE usuarios SET `last_login`=now() WHERE `userid`='$userid'");
 			header("Location: index.php");		
-		//	include("index.php");
 		}
 	} 
 	else 
@@ -81,4 +60,27 @@ if (isset ($_POST['submit']))
 		echo "$lang_login_fail<br />";
 	}
 }
+
+include("topheader.php");
+
 ?>
+
+
+<center><? echo $lang_index_ident; ?></center><br>
+
+<form method='post' action='?'>
+  <table width="25%" border="0" align="center" cellpadding="4" cellspacing="0">
+    <tr> 
+      <td width="22%">Usuario</td>
+      <td width="78%"><input name="user" type="text" id="usuario"></td>
+    </tr>
+    <tr> 
+      <td>Contrase&ntilde;a</td>
+      <td><input name="password" type="password" id="password"></td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+      <td><input type="submit" name="submit" value="OK"></td>
+    </tr>
+  </table>
+</form>

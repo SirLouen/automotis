@@ -10,7 +10,7 @@
  */
  
 echo("
-
+<html>
 <head>
 	<title> 
 		$lang_general_title
