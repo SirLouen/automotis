@@ -34,18 +34,9 @@
 		$esfuerzoactual = $array['esfuerzocomercial1'];
 		$tipoinsercion = '1';
 	}
-	
-	$cliente = $array['cliente'];
-	
-	$sql2 = mysql_query("SELECT * FROM clientes WHERE id = '$cliente'");
- 
- 	$rowcliente = mysql_fetch_array($sql2);
- 	
- 	$nombre_cliente = $rowcliente['nombre'];
- 	$movil_cliente = $rowcliente['movil'];
- 	$fijo_cliente = $rowcliente['fijo'];
- 	$email_cliente = $rowcliente['email'];
- 	$cp_cliente = $rowcliente['cp'];
+	 	
+ 	$nombrecliente = $array['nombrecliente'];
+
  	$fecha = $array['fechamatric'];
  	ereg( "([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $fecha, $mifecha);
     $dia = $mifecha[3];
@@ -66,10 +57,6 @@
 <table border="0">
 
 	<tr>
-		<td>Numero Registro:</td><td> <input type='text' name='registro' value='<?php echo $array['registro']; ?>'></td>
-	</tr>
-	
-	<tr>
 		<td>Marca Vehiculo:</td><td> <input type='text' name='marca' value='<?php echo $array['marca']; ?>' size=20 maxlength='20'></td>
 	</tr>
 	
@@ -78,23 +65,7 @@
 	</tr>
 
 	<tr>
-		<td>Nombre Cliente:</td><td> <input type='text' name='nombre_cliente' value='<?php echo $nombre_cliente; ?>' size=20 maxlength='20'></td>
-	</tr>
-	
-	<tr>
-		<td>Movil Cliente:</td><td> <input type='text' name='movil_cliente' value='<?php echo $movil_cliente; ?>' size=20 maxlength='20'></td>
-	</tr>
-	
-	<tr>
-		<td>Telefono Fijo:</td><td> <input type='text' name='fijo_cliente' value='<?php echo $fijo_cliente; ?>' size=20 maxlength='20'></td>
-	</tr>
-	
-	<tr>
-		<td>E-Mail Cliente:</td><td> <input type='text' name='email_cliente' value='<?php echo $email_cliente; ?>' size=40 maxlength='40'></td>
-	</tr>
-	
-	<tr>
-		<td>Codigo Postal Cliente:</td><td> <input type='text' name='cp_cliente' value='<?php echo $cp_cliente; ?>' size=20 maxlength='20'></td>
+		<td>Nombre Cliente:</td><td> <input type='text' name='nombrecliente' value='<?php echo $nombrecliente; ?>' size=20 maxlength='20'></td>
 	</tr>
 	
 	<tr>
@@ -133,7 +104,11 @@
 	</tr>
 	
 	<tr>
-	<td>Uso Anterior:</td><td> <input type='text' name='usoanterior' value='<?php echo $array['usoanterior']; ?>' size=20 maxlength='20'></td>
+		<td>Uso Anterior:</td><td> <input type='text' name='usoanterior' value='<?php echo $array['usoanterior']; ?>' size=20 maxlength='20'></td>
+	</tr>
+	
+	<tr>
+		<td>Estimacion PVP:</td><td> <input type='text' name='pvpestimado' value='<?php echo $array['pvpestimado']; ?>'></td>
 	</tr>
 	
 	<tr>
@@ -168,9 +143,6 @@
 		}
 	?>
 	
-	<tr>
-		<td>Estimacion PVP:</td><td> <input type='text' name='pvpestimado' value='<?php echo $array['pvpestimado']; ?>'></td>
-	</tr>
 	
 	<tr>
 		<td>Extras:</td><td></td>

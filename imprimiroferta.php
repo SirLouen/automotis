@@ -64,8 +64,12 @@ elseif ($arraytasacion['esfuerzocomercial2'])
 else
 	$esfuerzocomercial = $arraytasacion['esfuerzocomercial1'];
 
-$totaldescuentos = $arrayoferta['descuento'] + $esfuerzocomercial - $arraytasacion['totalreacondicionamiento'] + $arraytasacion['valormercado'];
-$preciofinal = $arrayvehiculo['pvp'] - $totaldescuentos;
+$valortasacion = $esfuerzocomercial - $arraytasacion['totalreacondicionamiento'] + $arraytasacion['valormercado'];
+$totaldescuentos = $arrayoferta['descuento'] + $valortasacion;
+
+$costevehiculo = $arrayvehiculo['pvp'] + $arrayoferta['sobreprecio'];
+$preciofinal = $costevehiculo - $totaldescuentos;
+
 
 $fechacreacion = $arrayoferta['fechacreacion'];
 $fechavehiculo = $arrayvehiculo['fechamatric'];
@@ -92,8 +96,8 @@ $html[$i] = "
 
 <table style='text-align: left; width: 100%;' border='0' cellpadding='2' cellspacing='2'>
 	<tr>
-		<td colspan='2' rowspan='4'><img style='width: 100px; height: 72px;' alt='' src='./imagenes/logo_peugeot.png'>
-		<img style='width: 215px; height: 72px;' alt='' src='./imagenes/logo_ibericar.jpg'></td>
+		<td colspan='2' rowspan='4'><img style='width: 95px; height: 72px;' alt='' src='./imagenes/logo_peugeot.png'>
+		<img style='width: 200px; height: 72px;' alt='' src='./imagenes/logo_ibericar.jpg'></td>
 		<td colspan='2' rowspan='1' style=' background-color: silver;'>".$arrayconcesionario['nombre']."</td>
 	</tr>
 	<tr>
@@ -113,7 +117,7 @@ $html[$i] = "
 		<td colspan='2' rowspan='1'>Telefono Vendedor: ".$arrayusuario['telefono']."</td>
 	</tr>
 	<tr>
-		<td colspan='2' rowspan='1'>E-Mail: ".substr($arrayusuario['email'],0,30)."</td>
+		<td colspan='2' rowspan='1'>E-Mail: ".substr($arrayusuario['email'],0,35)."</td>
 	</tr>
 	<tr>
 		<td colspan='2' rowspan='1' style=' background-color: silver;'><b>INFORMACION COMERCIAL</b></td>
@@ -137,7 +141,7 @@ $html[$i] = "
 	</tr>
 	<tr style=' background-color: silver;'>
 		<td colspan='2' rowspan='1'>Telefono: ".$arraycliente['fijo']."</td>
-		<td colspan='2' rowspan='1'>E-Mail: ".$arraycliente['email']."</td>
+		<td colspan='2' rowspan='1'>E-Mail: ".substr($arraycliente['email'],0,25)."</td>
 	</tr>
 	<tr>
 		<th colspan='4' rowspan='1'>Datos del Vehiculo Ofertado</th>
@@ -168,6 +172,16 @@ $html[$i] = "
 	<tr style=' background-color: silver;'>
 		<td colspan='4' rowspan='1'>".$arrayvehiculo['extras']."</td>
 	</tr>
+	</tr>
+	<tr>
+		<th colspan='4' rowspan='1'>Datos Vehiculo Entregado</th>
+	</tr>
+	<tr style=' background-color: silver;'>
+		<td>Matricula: ".$arraytasacion['matricula']."</td>
+		<td>Kms.: ".$arraytasacion['kilometros']."</td>
+		<td>Marca: ".$arraytasacion['marca']."</td>
+		<td>Modelo: ".substr($arraytasacion['modelo'],0,35)."</td>
+	</tr>
 	<tr>
 		<th colspan='4' rowspan='1'>Financiacion<br></th>
 	</tr>
@@ -187,7 +201,7 @@ $html[$i] = "
 		<td>".$arrayoferta['entrada2']." €</td>
 		<td>".$arrayoferta['meses2']."</td>
 		<td>".$arrayoferta['importe2']." €</td>
-		<th>Precio Vehiculo: ".$arrayvehiculo['pvp']." €</th>
+		<th>Precio Vehiculo: ".$costevehiculo." €</th>
 	</tr>
 	<tr style=' background-color: silver;'>
 		<td>".$arrayoferta['entrada3']." €</td>
@@ -201,21 +215,18 @@ $html[$i] = "
 	<tr style=' background-color: silver;'>
 		<th colspan='2' rowspan='1' >PRECIO FINAL</th>
 		<th>".$preciofinal." Euros</th>
-		<td>Impuestos y gastos de transferencia no incluidos</td>
+		<td>Impuestos y gastos de transferencia incluidos</td>
 	</tr>
 	<tr>
 		<th colspan='4' rowspan='1'>Oferta solo valida hasta final de mes</th>
-	</tr>
-	<tr>
-		<td colspan='4' rowspan='1'><br></td>
 	</tr>
 	<tr style=' background-color: silver;'>
 		<th colspan='2' rowspan='1'>Firma Cliente:</th>
 		<th colspan='2' rowspan='1'>Firma Vendedor:</th>
 	</tr>
 	<tr>
-		<td colspan='2' rowspan='1'><br><br><br><br><br><br><br><br></td>
-		<td colspan='2' rowspan='1'><br><br><br><br><br><br><br><br></td>
+		<td colspan='2' rowspan='1'><br><br><br><br><br><br></td>
+		<td colspan='2' rowspan='1'><br><br><br><br><br><br></td>
 	</tr>
 	<tr>
 		<td colspan='4' rowspan='1' style='font-size:8px;'>".$condicioneslegales."</td>

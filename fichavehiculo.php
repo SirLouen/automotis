@@ -14,6 +14,9 @@
  
  session_start();
  
+ if ($_SESSION['nivelusuario'] > 1)
+ {
+ 
  $maxofertas = 10;
  
  
@@ -36,12 +39,29 @@
  	$codigocortersia_cliente = $_POST['codigocortersia_cliente'];
  	$tipo_cliente = $_POST['tipo_cliente'];
  	
- 	// Insertamos primero el cliente en la tabla de clientes
+ 	// Insertamos primero el cliente en la tabla de clientes si no existe, sino actualizamos
+ 	// Vamos a buscar a ver si el ciente ya existe y se le dio una oferta antes 
  	
- 	$sql = mysql_query("SELECT * FROM clientes
-		 WHERE (movil = '$movil_cliente') OR ((fijo = '$fijo_cliente') AND (nombre LIKE '%$nombre_cliente%')) OR
-		 	   (email = '$email_cliente')");
-		 	   
+ 	
+ 	
+ 	$consulta = "SELECT * FROM clientes WHERE";
+ 	if ($email_cliente != "")
+ 		$consulta = $consulta." email = '$email_cliente'";
+ 		
+ 	if ($movil_cliente != "" && $email_cliente == "")
+ 		$consulta = $consulta." movil = '$movil_cliente'";
+ 	elseif ($movil_cliente != "")
+ 		$consulta = $consulta." OR movil = '$movil_cliente'";
+
+ 	if ($fijo_cliente != "" && $nombre_cliente != "" && $email_cliente == "" && $movil_cliente == "")
+ 		$consulta = $consulta." (fijo = '$fijo_cliente' AND nombre LIKE '%$nombre_cliente%')";
+ 	elseif ($fijo_cliente != "" && $nombre_cliente != "")
+ 		$consulta = $consulta." OR (fijo = '$fijo_cliente' AND nombre LIKE '%$nombre_cliente%')";
+ 	elseif ($email_cliente == "" && $movil_cliente == "" && $fijo_cliente == "" && $nombre_cliente == "")
+		$consulta = 0;
+ 	
+	$sql = mysql_query($consulta);
+ 
 	$login_check = mysql_num_rows($sql);
 	
 	if($login_check == 0)
@@ -104,11 +124,12 @@
  	$entrada3 = $_POST['entrada3'];
  	$meses3 = $_POST['meses3'];
  	$importe3 = $_POST['importe3'];
+ 	$sobreprecio = $_POST['sobreprecio'];
  	
  	$sql = "INSERT INTO ofertas (vehiculo, cliente, tasacion, usuario, descuento, fechacreacion, entrada1, meses1,
-				importe1, entrada2, meses2, importe2, entrada3, meses3, importe3)
+				importe1, entrada2, meses2, importe2, entrada3, meses3, importe3, sobreprecio)
 	 			VALUES ('$vehiculo', '$cliente', '$tasacion', '$usuariooferta', '$descuento', now(), '$entrada1', '$meses1',
-				'$importe1', '$entrada2', '$meses2', '$importe2', '$entrada3', '$meses3', '$importe3')";
+				'$importe1', '$entrada2', '$meses2', '$importe2', '$entrada3', '$meses3', '$importe3', '$sobreprecio')";
 	 	
 	 	if (!(mysql_query($sql,$conexion)))
 		{
@@ -124,6 +145,7 @@
 		}
 		include("footer.php");
  } 
+ 
  else
  {
  
@@ -246,12 +268,14 @@
 						$filas = mysql_num_rows($sql);
 						echo "<tr>";
 						echo "<td>Oferta</td><td>Usuario</td><td>Total</td><td>Imprimir</td>";
-						echo "</tr>";
+						echo "</t {
+ 	
+ }r>";
 						for($i=0;$i<$filas&&$i<$maxofertas;$i++)
 						{	
 							echo "<tr>";
 							$arrayofertas = mysql_fetch_array($sql);
-							$total = $pvp - $arrayofertas['descuento'];
+							$total = $pvp + $arrayofertas ['sobreprecio']- $arrayofertas['descuento'];
 							$usuariooferta = $arrayofertas['usuario'];
 							$sql2 = mysql_query("SELECT nombre FROM usuarios WHERE userid = $usuariooferta");
 							$rowusuario = mysql_fetch_row($sql2);
@@ -286,5 +310,13 @@
 			echo "$lang_file_fail<br />";
 		}
 		
+  }
+ // Fin Nivel de Usuario
  }
+ else
+{
+	echo "Sesion Finalizada, Vuelva a acceder al Sistema<br>";
+	include("footer.php");
+}
+ 
 ?>

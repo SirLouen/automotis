@@ -21,10 +21,6 @@
 	<input type='hidden' name='tipoinsercion' value='<?php echo $tipoinsercion; ?>'>
 	
 <table border="0" align ="center">
-
-	<tr>
-		<td>Numero Registro:</td><td> <input type='text' name='registro' value=''></td>
-	</tr>
 	
 	<tr>
 		<td>Marca Vehiculo:</td><td> <input type='text' name='marca' value='' size=20 maxlength='20'></td>
@@ -35,23 +31,7 @@
 	</tr>
 
 	<tr>
-		<td>Nombre Cliente:</td><td> <input type='text' name='nombre_cliente' value='' size=20 maxlength='20'></td>
-	</tr>
-	
-	<tr>
-		<td>Movil Cliente:</td><td> <input type='text' name='movil_cliente' value='' size=20 maxlength='20'></td>
-	</tr>
-	
-	<tr>
-		<td>Telefono Fijo:</td><td> <input type='text' name='fijo_cliente' value='' size=20 maxlength='20'></td>
-	</tr>
-	
-	<tr>
-		<td>E-Mail Cliente:</td><td> <input type='text' name='email_cliente' value='' size=40 maxlength='40'></td>
-	</tr>
-	
-	<tr>
-		<td>Codigo Postal Cliente:</td><td> <input type='text' name='cp_cliente' value='' size=20 maxlength='20'></td>
+		<td>Nombre Cliente:</td><td> <input type='text' name='nombrecliente' value='' size=20 maxlength='20'></td>
 	</tr>
 	
 	<tr>
@@ -94,6 +74,10 @@
 	</tr>
 	
 	<tr>
+		<td>Estimacion PVP:</td><td> <input type='text' name='pvpestimado' value=''></td>
+	</tr>
+	
+	<tr>
 	<td>Valor de Mercado EUROTAX:</td><td> <input type='text' name='valormercado' value=''></td>
 	</tr>
 	
@@ -116,9 +100,7 @@
 		}
 	?>
 	
-	<tr>
-		<td>Estimacion PVP:</td><td> <input type='text' name='pvpestimado' value=''></td>
-	</tr>
+	
 	
 	<tr>
 		<td>Extras:</td><td></td>

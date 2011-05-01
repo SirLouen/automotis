@@ -93,29 +93,9 @@ if (isset ($_POST['tasacionsubmit']))
 			}
 			echo "</tr>";
 			
-			echo "<tr><td>Registro</td>";
-			for($i=0; $i<$filas; $i++) {
-			echo "<td>". $array2d[$i]['registro'] ."</td>";
-			}
-			echo "</tr>";
-			
 			echo "<tr><td>Nombre Cliente</td>";
-			for($i=0; $i<$filas; $i++) 
-			{
-				$cliente = $array2d[$i]['cliente'];
-				$rowcliente = mysql_fetch_row(mysql_query("SELECT nombre FROM clientes WHERE id = '$cliente'")); 
-				echo "<td>". $rowcliente[0] ."</td>";
-			}
-			echo "</tr>";
-			
-			echo "<tr><td>Localidad</td>";
-			for($i=0; $i<$filas; $i++) 
-			{
-				$cliente = $array2d[$i]['cliente'];
-				$rowcliente = mysql_fetch_row(mysql_query("SELECT cp FROM clientes WHERE id = '$cliente'")); 
-				$cp = $rowcliente[0];
-				$rowcp = mysql_fetch_row(mysql_query("SELECT poblacion FROM codigospostales WHERE cp = '$cp'")); 
-				echo "<td>". $rowcp[0] ."</td>";
+			for($i=0; $i<$filas; $i++) {
+			echo "<td>". $array2d[$i]['nombrecliente'] ."</td>";
 			}
 			echo "</tr>";
 			
@@ -323,7 +303,6 @@ if (isset ($_POST['tasacionsubmit']))
 elseif (isset ($_POST['intasasubmit'])) 
 {
 	$matricula = $_POST['matricula'];
-	$registro = $_POST['registro'];
 	$marca = $_POST['marca'];
 	$modelo = $_POST['modelo'];
 	$fechamatric = $_POST['anyo']."-".$_POST['mes']."-".$_POST['dia'];
@@ -342,11 +321,7 @@ elseif (isset ($_POST['intasasubmit']))
 	$usuariotasacion = $_SESSION['userid'];
 	$pvpestimado = $_POST['pvpestimado'];
 	
-	$nombre_cliente = $_POST['nombre_cliente'];
-	$cp_cliente = $_POST['cp_cliente'];
-	$movil_cliente = $_POST['movil_cliente'];
-	$fijo_cliente = $_POST['fijo_cliente'];
-	$email_cliente = $_POST['email_cliente'];
+	$nombrecliente = $_POST['nombrecliente'];
 	
 	$tipoinsercion = $_POST['tipoinsercion'];
 		
@@ -383,54 +358,6 @@ elseif (isset ($_POST['intasasubmit']))
 	$idtasacion = $_POST['idtasacion'];
 	$esfuerzoactual = $_POST['esfuerzoactual'];
 	
-	$sql = mysql_query("SELECT * FROM clientes
-		 WHERE (movil = '$movil_cliente') OR ((fijo = '$fijo_cliente') AND (nombre LIKE '%$nombre_cliente%')) OR
-		 	   (email = '$email_cliente')");
-		 	   
-	$login_check = mysql_num_rows($sql);
-	
-	if($login_check == 0)
-	{
-		$sql = "INSERT INTO clientes (nombre, cp, movil, fijo, email, usuario, fechacreacion)
- 			VALUES ('$nombre_cliente', '$cp_cliente', '$movil_cliente', '$fijo_cliente', '$email_cliente', 
- 					'$usuariotasacion', now())";
- 		if (!(mysql_query($sql,$conexion)))
-		{
-			die('Error: '.mysql_error());
-		}				
-		
-		$sql = mysql_query("SELECT id FROM clientes
-			   WHERE (movil = '$movil_cliente') OR ((fijo = '$fijo_cliente') AND (nombre LIKE '%$nombre_cliente%')) OR
-		 	   (email = '$email_cliente')");
- 	
- 		$rowcliente = mysql_fetch_row($sql);
- 		$cliente = $rowcliente[0];
-		
-	}
-	else
-	{
-		$existe = 0;
-		$array = mysql_fetch_array($sql);
-		$cliente = $array['id'];
-		if ($array['nombre']){ $nombre_cliente =  $array['nombre']; $existe++; }
-		if ($array['movil']){ $movil_cliente =  $array['movil']; $existe++; }
-		if ($array['fijo']){ $fijo_cliente =  $array['fijo']; $existe++; }
-		if ($array['email']){ $email_cliente =  $array['email']; $existe++; }
-		if ($array['cp']){ $cp_cliente =  $array['cp']; $existe++; }
-		
-		if($existe != 5)
-		{
-		$sql2 = "UPDATE clientes
-		    	SET nombre = '$nombre_cliente', movil = '$movil_cliente', fijo = '$fijo_cliente',
-		    	email = '$email_cliente', cp = '$cp_cliente', fechacreacion = now(), usuario = '$usuariotasacion' 
-		    	WHERE (id = '$cliente')";	
-		    	if (!(mysql_query($sql2,$conexion)))
-		    	{
-		    		die('Error: '.mysql_error());
-		    	}
-		}
-	}
-	
 	// Inicializamos a 0 los indices para insertar en la tabla de reacondicionamientos
 	
 	$numreacons = 0; 	
@@ -462,12 +389,12 @@ elseif (isset ($_POST['intasasubmit']))
 	
 		
 		$sql = "UPDATE tasaciones
-				SET marca = '$marca', modelo = '$modelo', matricula = '$matricula', cliente = '$cliente', fechamatric = '$fechamatric',
+				SET marca = '$marca', modelo = '$modelo', matricula = '$matricula', fechamatric = '$fechamatric',
 				kilometros = '$kilometros', color = '$color', combustible = '$combustible',	potencia = '$potencia',
 				cilindrada = '$cilindrada', carroceria = '$carroceria', plazas = '$plazas', usoanterior = '$usoanterior',
-				valormercado = '$valormercado',".$nombreesfuerzocomercial." = '$esfuerzocomercial',
+				valormercado = '$valormercado',".$nombreesfuerzocomercial." = '$esfuerzocomercial', nombrecliente = '$nombrecliente',
 				usuario = '$usuariotasacion', ".$nombrefecha." = now(), observaciones = '$observaciones', pvpestimado = $pvpestimado,
-				registro = '$registro', abs = '$abs', esp = '$esp', ct = $ct, fourwd = '$fourwd', ac = '$ac', ap = '$ap', al = '$al',
+				abs = '$abs', esp = '$esp', ct = $ct, fourwd = '$fourwd', ac = '$ac', ap = '$ap', al = '$al',
 				ala = '$ala', an = '$an', inm = '$inm', cc = '$cc', aa = '$aa', cl = '$cl', ts = '$ts', da = '$da',	ee = '$ee',
 				ae = '$ae', cu = '$cu', aca = '$aca', cv = '$cv', fx = '$fx', apk = '$apk', rcd = '$rcd', gps = '$gps', ba = '$ba',
 				br = '$br', ll = '$ll', tu = '$tu', pm = '$pm'
@@ -485,13 +412,13 @@ elseif (isset ($_POST['intasasubmit']))
 	
  	else
 	{	
-		$sql = "INSERT INTO tasaciones (marca, modelo, matricula, cliente, fechamatric, kilometros, color, combustible,
+		$sql = "INSERT INTO tasaciones (marca, modelo, matricula, fechamatric, kilometros, color, combustible,
 				potencia, cilindrada, carroceria, plazas, usoanterior, valormercado, esfuerzocomercial1, usuario, fecha1,
-				observaciones, pvpestimado, registro, abs, esp, ct, fourwd, ac, ap, al, ala, an, inm, cc, aa, cl, ts, da,
+				observaciones, pvpestimado, nombrecliente, abs, esp, ct, fourwd, ac, ap, al, ala, an, inm, cc, aa, cl, ts, da,
 				ee, ae, cu, aca, cv, fx, apk, rcd, gps, ba, br, ll, tu, pm)
-	 			VALUES ('$marca', '$modelo', '$matricula', '$cliente', '$fechamatric', '$kilometros', '$color',
+	 			VALUES ('$marca', '$modelo', '$matricula', '$fechamatric', '$kilometros', '$color',
 	 			'$combustible',	'$potencia', '$cilindrada', '$carroceria', '$plazas', '$usoanterior', '$valormercado',
-	 			'$esfuerzocomercial', '$usuariotasacion', now(), '$observaciones', '$pvpestimado', '$registro', '$abs',
+	 			'$esfuerzocomercial', '$usuariotasacion', now(), '$observaciones', '$pvpestimado', '$nombrecliente', '$abs',
 	 			'$esp', '$ct', '$fourwd', '$ac', '$ap', '$al', '$ala', '$an', $inm, '$cc', '$aa', '$cl', '$ts', '$da', '$ee', '$ae',
 	 			'$cu', '$aca', '$cv', '$fx', '$apk', '$rcd', '$gps', '$ba', '$br', '$ll', '$tu', '$pm')";
 	 	

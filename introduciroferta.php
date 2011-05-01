@@ -80,7 +80,9 @@
 		 }
 		 ?></select></td>
 	</tr>	 
-		
+	<tr>
+		<td>Sobre-Precio:</td><td> <input type='text' name='sobreprecio' value='' size=20 maxlength='20'></td>
+	</tr>
 	<tr>
 		<td>Descuento Especial:</td><td> <input type='text' name='descuento' value='' size=20 maxlength='20'></td>
 	</tr>
