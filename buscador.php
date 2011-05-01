@@ -114,7 +114,7 @@ if (isset ($_POST['submit']))
 		$kmmenor = "0";
 		$kmmayor = "500000";
 		$anyomenor = date("Y")-100;
-		$anyomayor = date("Y")-4;
+		$anyomayor = date("Y");
 		$fechamatricmenor = $anyomenor."-".date('n')."-".date('j');
 		$fechamatricmayor = $anyomayor."-".date('n')."-".date('j');
 	}
