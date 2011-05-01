@@ -43,6 +43,7 @@
  $lang_find_precio = "Precio Entre";
  $lang_find_importe = "Precio";
  $lang_find_combustible = "Combustible";
+ $lang_find_tipovo = "Tipo VO";
  
  $lang_find_fail = "No se han encontrado vehiculos con esa seleccion";
  

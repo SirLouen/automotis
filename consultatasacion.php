@@ -13,6 +13,9 @@
  
  session_start();
  
+ if ($_SESSION['nivelusuario'] >= 3)
+ {
+ 
 ?>
 
 
@@ -252,7 +255,8 @@ if (isset ($_POST['tasacionsubmit']))
 			echo "<tr><td>Tasador</td>";
 			for($i=0; $i<$filas; $i++) 
 			{
-				$rowusuario = mysql_fetch_row(mysql_query("SELECT nombre FROM usuarios WHERE userid = '$userid'")); 
+				$usuariotasacion = $array2d[$i]['usuario'];
+				$rowusuario = mysql_fetch_row(mysql_query("SELECT nombre FROM usuarios WHERE userid = '$usuariotasacion'")); 
 				echo "<td>". $rowusuario[0] ."</td>";
 			}
 			echo "</tr>";
@@ -260,7 +264,8 @@ if (isset ($_POST['tasacionsubmit']))
 			echo "<tr><td>Concesionario</td>";
 			for($i=0; $i<$filas; $i++) 
 			{
-				$rowusuario = mysql_fetch_row(mysql_query("SELECT concesionario FROM usuarios WHERE userid = '$userid'"));
+				$usuariotasacion = $array2d[$i]['usuario'];
+				$rowusuario = mysql_fetch_row(mysql_query("SELECT concesionario FROM usuarios WHERE userid = '$usuariotasacion'"));
 				echo "<td>". $rowusuario[0] ."</td>";
 			}
 			echo "</tr>";
@@ -561,6 +566,13 @@ elseif (isset ($_POST['tasacionmodificar']))
 	
 }
 
+// FIN DE NIVEL USUARIO
+}
+else
+{
+	echo "Sesion Finalizada, Vuelva a acceder al Sistema<br>";
+	include("footer.php");
+}
 
 
 ?> 

@@ -192,9 +192,9 @@
 					<tr>
 						<td style="vertical-align: top;"><?php
 						if ($_SESSION['concesionario']=="10")
-							echo $lang_file_pvd.': '.$pvd; 	
+							echo $lang_file_pvd.': '.$pvd.' Euros'; 	
 						else
-						 	echo $lang_file_pvp.': '.$pvp;						
+						 	echo $lang_file_pvp.': '.$pvp.' Euros';						
 						?><br></td>
 					</tr>
 					<tr>

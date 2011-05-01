@@ -113,7 +113,7 @@ $html[$i] = "
 		<td colspan='2' rowspan='1'>Telefono Vendedor: ".$arrayusuario['telefono']."</td>
 	</tr>
 	<tr>
-		<td colspan='2' rowspan='1'>E-Mail Vendedor: ".$arrayusuario['email']."</td>
+		<td colspan='2' rowspan='1'>E-Mail: ".substr($arrayusuario['email'],0,30)."</td>
 	</tr>
 	<tr>
 		<td colspan='2' rowspan='1' style=' background-color: silver;'><b>INFORMACION COMERCIAL</b></td>

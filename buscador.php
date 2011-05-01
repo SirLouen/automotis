@@ -38,6 +38,15 @@
       </select></td>
     </tr>
     <tr> 
+      <td><? echo $lang_find_tipovo; ?></td>
+      <td><select name="tipovo">
+      <option selected value="todos">Cualquiera</option>
+      <option value="usado">Vehiculo Usado</option>
+      <option value="ocasion">Vehiculo Ocasion</option>
+      <option value="seminuevo">Vehiculo Seminuevo</option>
+      </select></td>
+    </tr>
+    <tr> 
       <td>&nbsp;</td>
       <td><input type="submit" name="submit" value="OK"></td>
     </tr>
@@ -70,12 +79,53 @@ if (isset ($_POST['submit']))
 		
 	if ($combustible == "TODOS")
 		$combustible = "";	
+		
+	$tipovo = $_POST['tipovo'];
+	
+	if ($tipovo == "seminuevo")
+	{
+		$kmmenor = "0";
+		$kmmayor = "35000";
+		$anyomenor = date("Y")-2;
+		$anyomayor = date("Y");
+		$fechamatricmenor = $anyomenor."-".date('n')."-".date('j');
+		$fechamatricmayor = $anyomayor."-".date('n')."-".date('j');
+	}
+	elseif ($tipovo == "ocasion")
+	{
+		$kmmenor = "0";
+		$kmmayor = "70000";
+		$anyomenor = date("Y")-4;
+		$anyomayor = date("Y")-2;
+		$fechamatricmenor = $anyomenor."-".date('n')."-".date('j');
+		$fechamatricmayor = $anyomayor."-".date('n')."-".date('j');
+	}
+	elseif ($tipovo == "usado")
+	{
+		$kmmenor = "0";
+		$kmmayor = "500000";
+		$anyomenor = date("Y")-100;
+		$anyomayor = date("Y")-4;
+		$fechamatricmenor = $anyomenor."-".date('n')."-".date('j');
+		$fechamatricmayor = $anyomayor."-".date('n')."-".date('j');
+	}
+	else
+	{
+		$kmmenor = "0";
+		$kmmayor = "500000";
+		$anyomenor = date("Y")-100;
+		$anyomayor = date("Y")-4;
+		$fechamatricmenor = $anyomenor."-".date('n')."-".date('j');
+		$fechamatricmayor = $anyomayor."-".date('n')."-".date('j');
+	}
 	
 	
 	$sql = mysql_query("SELECT vehiculos.* FROM vehiculos_disponibles, vehiculos
 			WHERE (vehiculos_disponibles.matricula = vehiculos.matricula) AND
 		    (vehiculos.matricula LIKE '%$matricula%') AND (vehiculos.$nombreprecio >= '$preciomenor')
 		    AND (vehiculos.$nombreprecio <= '$preciomayor') AND (combustible LIKE '%$combustible%')
+		    AND (vehiculos.kilometros >= '$kmmenor') AND (vehiculos.kilometros <= '$kmmayor')
+		    AND (vehiculos.fechamatric >= '$fechamatricmenor') AND (vehiculos.fechamatric <= '$fechamatricmayor')
 			AND (marca LIKE '%$marca%') AND (modelo LIKE '%$modelo%') ORDER BY now()-fechaentrada DESC");
 		
 	$numrows = mysql_num_rows($sql);
@@ -117,9 +167,9 @@ if (isset ($_POST['submit']))
 			 	echo "<td>".$diasstock."</td>";
 			}
 			if ($_SESSION['concesionario'] == 10)
-				echo "<td>".$arrayvehiculos['pvd']."</td>";
+				echo "<td>".$arrayvehiculos['pvd']." &euro;</td>";
 			else
-				echo "<td>".$arrayvehiculos['pvp']."</td>";		
+				echo "<td>".$arrayvehiculos['pvp']." &euro;</td>";		
 			
 			echo "</tr>";
 		}
