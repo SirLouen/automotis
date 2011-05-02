@@ -145,6 +145,65 @@
 		}
 		include("footer.php");
  } 
+ elseif (isset ($_POST['reservasubmit']))
+ {
+	include("introducirreserva.php"); 	
+	include("footer.php");
+ } 
+ 
+ elseif (isset ($_POST['inreservasubmit']))
+ {
+ 	
+ 	$usuarioreserva = $_SESSION['userid'];
+ 	
+ 	$nombre_cliente = $_POST['nombre_cliente'];
+ 	$apellidos_cliente = $_POST['apellidos_cliente'];
+ 	$cp_cliente = $_POST['cp_cliente'];
+ 	$movil_cliente = $_POST['movil_cliente'];
+ 	$fijo_cliente = $_POST['fijo_cliente'];
+ 	$email_cliente = $_POST['email_cliente'];
+ 	$direccion_cliente = $_POST['direccion_cliente'];
+ 	$dni_cliente = $_POST['dni_cliente'];
+ 	$dia_cliente = $_POST['dia_cliente'];
+ 	$mes_cliente = $_POST['mes_cliente'];
+ 	$anyo_cliente = $_POST['anyo_cliente'];
+ 	$fechanacimiento = $anyo_cliente."-".$mes_cliente."-".$dia_cliente;
+ 	$codigocortersia_cliente = $_POST['codigocortersia_cliente'];
+ 	$tipo_cliente = $_POST['tipo_cliente'];
+ 	
+ 	$idcliente = $_POST['idcliente'];
+ 	$importe = $_POST['importe'];
+ 	$idvehiculo = $_POST['idvehiculo'];
+ 	$idoferta = $_POST['idoferta'];
+ 	
+	$sql2 = "UPDATE clientes
+		    	SET nombre = '$nombre_cliente', apellidos = '$apellidos_cliente', movil = '$movil_cliente',
+		    	fijo = '$fijo_cliente',	email = '$email_cliente', cp = '$cp_cliente', fechacreacion = now(), usuario = '$usuarioreserva',
+		    	direccion = '$direccion_cliente', dni = '$dni_cliente', fechanacimiento = '$fechanacimiento',
+		    	codigocortesia = '$codigocortesia_cliente', tipo = '$tipo_cliente'
+		    	WHERE (id = '$idcliente')";	
+		    	if (!(mysql_query($sql2,$conexion)))
+		    	{
+		    		die('Error: '.mysql_error());
+		    	}
+
+ 	
+ 	$sql = "INSERT INTO reservas (oferta, cliente, vehiculo, usuario, importe, fechareserva)
+	 			VALUES ('$idoferta', '$idcliente', '$idvehiculo', '$usuarioreserva', '$importe', now())";
+	 	
+	 	if (!(mysql_query($sql,$conexion)))
+		{
+			die('Error: '.mysql_error());
+		}
+		else
+		{
+			$sql2 = mysql_query("SELECT id FROM reservas WHERE vehiculo = '$idvehiculo'");
+			$rowoferta = mysql_fetch_row($sql2);
+			
+			echo "<a target='_blank' href='imprimirreserva.php?reserva=".$rowreserva[0]."'> Imprimir Reserva</a> <br><br>";
+		}
+		include("footer.php");
+ } 
  
  else
  {
@@ -153,7 +212,7 @@
 	 $extensions = array('jpg','jpeg','gif','png','bmp','JPG');
 	 $matricula = $_GET['matricula'];
 	
-	 $folder_image_name = "/webdms/imagenes/$matricula/";
+	 $folder_image_name = "/automotis/imagenes/$matricula/";
 	 $images_folder_path = $_SERVER['DOCUMENT_ROOT'].$folder_image_name;
 	 $url_to_folder = 'http://'.$_SERVER["SERVER_NAME"].$folder_image_name;
 	
@@ -250,7 +309,7 @@
 					<tr>
 						<td style="vertical-align: middle; height: 40px;">
 						<? if ($_SESSION['nivelusuario'] >= '2') { ?>
-						 <form method='post' action='fichavehiculo.php''>
+						 <form method='post' action='fichavehiculo.php'>
 						 <input type='hidden' name='matricula' value='<?php echo "$matricula"; ?> '>
 						 <input type='hidden' name='idvehiculo' value='<?php echo "$id"; ?> '>
 						 <input type=submit name='ofertasubmit' value='Crear Oferta'>
@@ -284,26 +343,33 @@
 							echo "<td>".$rowusuario[0]."</td>";
 							echo "<td>".$total."</td>";
 							echo "<td><a target='_blank' href='imprimiroferta.php?oferta=".$arrayofertas['id']."'> Imprimir Oferta</a></td>";
-//							echo "<td>";
-//							if ($_SESSION['userid'] == $arrayofertas['usuario']) 
-//							{ 
-//						 		echo "<form method='post' action='imprimiroferta.php''>
-//						 		<input type='hidden' name='matricula' value='".$arrayofertas['id']."'>
-//						 		<input type='hidden' name='idvehiculo' value='".$id."'>
-//						 		<input type=submit name='modificarofertasubmit' value='Reserva'>";
-//							} 
-//							echo "</td>";
+							
+							// Comprobar si ya esta reservado
+							$sql = mysql_select("SELECT vehiculo FROM reservas WHERE vehiculo = '$id'");
+							if (mysql_num_rows($sql) > 0)
+							{
+								if ($_SESSION['userid'] == $arrayofertas['usuario']) 
+								{
+									echo "<td>";	 
+								 	echo "<form method='post' action='fichavehiculo.php'>
+								 	<input type='hidden' name='idoferta' value='".$arrayofertas['id']."'>
+								 	<input type='hidden' name='idvehiculo' value='".$id."'>
+								 	<input type=submit name='reservasubmit' value='Reserva'>";
+									echo "</td>";
+								} 
+							}
 							echo "</tr>";
 						}
 						
 					?>
 				</table>
-				<?	} ?>
-				<br>
-			
-			<?php
-					
+				<?	
+				// IF NIVEL USUARIO PARA OFERTAS
+				} 
+			echo "<br>";
 			}
+			include("footer.php");
+			
 		}
 		else 
 		{

@@ -146,7 +146,14 @@ if (isset ($_POST['submit']))
 		
 		for($i=0;$i<$numrows;$i++)
 		{
-			echo "<tr>";
+//			$vehiculo = $arrayvehiculos['id'];
+//			$sql = mysql_query("SELECT vehiculo FROM reservas WHERE vehiculo = '$vehiculo'");
+//			$numerovehiculos = mysql_num_rows($sql);
+//			if ($numerovehiculos > 0)
+//				echo "<tr style = 'background-color:red'>";
+//			else
+				echo "<tr>";			
+			
 			$arrayvehiculos = mysql_fetch_array($sql);
 			$today = juliantojd(date("n"),date("j"),date("Y"));
 			$fechaentry = $arrayvehiculos['fechaentrada'];

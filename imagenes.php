@@ -14,7 +14,7 @@
 $extensions = array('jpg','jpeg','gif','png','bmp','JPG');
 $matricula = $_GET['matricula'];
 
-$folder_image_name = "/webdms/imagenes/$matricula/";
+$folder_image_name = "/automotis/imagenes/$matricula/";
 $images_folder_path = $_SERVER['DOCUMENT_ROOT'].$folder_image_name;
 $url_to_folder = 'http://'.$_SERVER["SERVER_NAME"].$folder_image_name;
 
