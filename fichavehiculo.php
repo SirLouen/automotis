@@ -14,7 +14,7 @@
  
  session_start();
  
- if ($_SESSION['nivelusuario'] > 1)
+ if ($_SESSION['nivelusuario'] >= 1)
  {
  
  $maxofertas = 10;
