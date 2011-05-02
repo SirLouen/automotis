@@ -146,12 +146,12 @@ if (isset ($_POST['submit']))
 		
 		for($i=0;$i<$numrows;$i++)
 		{
-//			$vehiculo = $arrayvehiculos['id'];
-//			$sql = mysql_query("SELECT vehiculo FROM reservas WHERE vehiculo = '$vehiculo'");
-//			$numerovehiculos = mysql_num_rows($sql);
-//			if ($numerovehiculos > 0)
-//				echo "<tr style = 'background-color:red'>";
-//			else
+			$vehiculo = $arrayvehiculos['id'];
+			$sql2 = mysql_query("SELECT vehiculo FROM reservas WHERE vehiculo = '$vehiculo'");
+			$numerovehiculos = mysql_num_rows($sql2);
+			if ($numerovehiculos > 0)
+				echo "<tr style = 'background-color:red'>";
+			else
 				echo "<tr>";			
 			
 			$arrayvehiculos = mysql_fetch_array($sql);
