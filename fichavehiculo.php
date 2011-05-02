@@ -201,6 +201,10 @@
 			$rowreserva = mysql_fetch_row($sql2);
 			$numreserva = $rowreserva[0];
 			$sql3 = "INSERT INTO reservas_activas (vehiculo, fecha) VALUES ('$idvehiculo', now())";
+			if (!(mysql_query($sql3,$conexion)))
+			{
+			die('Error: '.mysql_error());
+			}
 			
 			echo "<a target='_blank' href='imprimirreserva.php?reserva=".$numreserva."'> Imprimir Reserva</a> <br><br>";
 		}
@@ -317,7 +321,7 @@
 						 <input type=submit name='ofertasubmit' value='Crear Oferta'>
 						<?	} ?>
 						</td>
-						<td style="vertical-align: middle; height: 40px;"><strike>Crear Reserva Proximamente</strike></td>
+						<td style="vertical-align: middle; height: 40px;"><strike>Imprimir Percha Proximamente</strike></td>
 						<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_garantia.': '.$garantia; ?><br></td>
 					<tr>
 				</table>
