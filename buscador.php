@@ -149,7 +149,7 @@ if (isset ($_POST['submit']))
 			$arrayvehiculos = mysql_fetch_array($sql);
 			
 			$vehiculo = $arrayvehiculos['id'];
-			$sql2 = mysql_query("SELECT * FROM reservas WHERE vehiculo = '$vehiculo'");
+			$sql2 = mysql_query("SELECT * FROM reservas_activas WHERE vehiculo = '$vehiculo'");
 			$numerovehiculos = 0;
 			$numerovehiculos = mysql_num_rows($sql2);
 			if ($numerovehiculos > 0)

@@ -198,9 +198,11 @@
 		else
 		{
 			$sql2 = mysql_query("SELECT id FROM reservas WHERE vehiculo = '$idvehiculo'");
-			$rowoferta = mysql_fetch_row($sql2);
+			$rowreserva = mysql_fetch_row($sql2);
+			$numreserva = $rowreserva[0];
+			$sql3 = "INSERT INTO reservas_activas (vehiculo, fecha) VALUES ('$idvehiculo', now())";
 			
-			echo "<a target='_blank' href='imprimirreserva.php?reserva=".$rowreserva[0]."'> Imprimir Reserva</a> <br><br>";
+			echo "<a target='_blank' href='imprimirreserva.php?reserva=".$numreserva."'> Imprimir Reserva</a> <br><br>";
 		}
 		include("footer.php");
  } 
@@ -320,7 +322,8 @@
 					<tr>
 				</table>
 				<br>
-				<? if ($_SESSION['nivelusuario'] >= '2') 
+				<? 
+				if ($_SESSION['nivelusuario'] >= '2') 
 				{
 					echo "<table border ='1'>";
 				
@@ -328,9 +331,8 @@
 						$filas = mysql_num_rows($sql);
 						echo "<tr>";
 						echo "<td>Oferta</td><td>Usuario</td><td>Total</td><td>Imprimir</td>";
-						echo "</t {
+						echo "</tr>";
  	
- }r>";
 						for($i=0;$i<$filas&&$i<$maxofertas;$i++)
 						{	
 							echo "<tr>";
@@ -346,7 +348,7 @@
 							echo "<td><a target='_blank' href='imprimiroferta.php?oferta=".$arrayofertas['id']."'> Imprimir Oferta</a></td>";
 							
 							// Comprobar si ya esta reservado
-							$sql3 = mysql_query("SELECT vehiculo FROM reservas WHERE vehiculo = '$id'");
+							$sql3 = mysql_query("SELECT vehiculo FROM reservas_activas WHERE vehiculo = '$id'");
 							if (mysql_num_rows($sql3) == 0)
 							{
 								if ($_SESSION['userid'] == $arrayofertas['usuario']) 
