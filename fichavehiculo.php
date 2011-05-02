@@ -347,7 +347,7 @@
 							
 							// Comprobar si ya esta reservado
 							$sql3 = mysql_query("SELECT vehiculo FROM reservas WHERE vehiculo = '$id'");
-							if (mysql_num_rows($sql3) > 0)
+							if (mysql_num_rows($sql3) == 0)
 							{
 								if ($_SESSION['userid'] == $arrayofertas['usuario']) 
 								{

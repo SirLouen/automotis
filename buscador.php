@@ -146,15 +146,18 @@ if (isset ($_POST['submit']))
 		
 		for($i=0;$i<$numrows;$i++)
 		{
+			$arrayvehiculos = mysql_fetch_array($sql);
+			
 			$vehiculo = $arrayvehiculos['id'];
-			$sql2 = mysql_query("SELECT vehiculo FROM reservas WHERE vehiculo = '$vehiculo'");
+			$sql2 = mysql_query("SELECT * FROM reservas WHERE vehiculo = '$vehiculo'");
+			$numerovehiculos = 0;
 			$numerovehiculos = mysql_num_rows($sql2);
 			if ($numerovehiculos > 0)
-				echo "<tr style = 'background-color:red'>";
+				echo "<tr style='background-color:red;'>";
 			else
 				echo "<tr>";			
 			
-			$arrayvehiculos = mysql_fetch_array($sql);
+			
 			$today = juliantojd(date("n"),date("j"),date("Y"));
 			$fechaentry = $arrayvehiculos['fechaentrada'];
 			$fechadiv = split("-",$fechaentry);
@@ -162,7 +165,7 @@ if (isset ($_POST['submit']))
 			$diasstock = $today - $fechaentrada;
 			$fechamatricula = fecha_normal($arrayvehiculos['fechamatric']);
 			
-			echo "<td style='vertical-align: top; width: 80px; height: 60px''>
+			echo "<td style='vertical-align: top; width: 80px; height: 60px'>
 			<a href='index.php?matricula=".$arrayvehiculos['matricula']."'>
 			<img style='width: 80px; height: 60px;' alt='' src='./imagenes/".$arrayvehiculos['matricula']."/tn/1.jpg'>
 			</a></td><td><a href='index.php?matricula=".$arrayvehiculos['matricula']."'>".$arrayvehiculos['matricula']."</a></td>
