@@ -2,7 +2,7 @@
 /*
  * Created on 18/04/2011
  *
- * webdms  Copyright (C) <2011>  mcamargo
+ * automotis  Copyright (C) <2011>  Manuel Camargo
  * This program comes with ABSOLUTELY NO WARRANTY; 
  * This is free software, and you are welcome to redistribute it
  * under certain conditions; Read README file for more information
@@ -10,7 +10,7 @@
  */
  
 $lang = "es-es";
-$base="webdms";
+$base="automotis";
 $host="localhost";
 $user="trial";
 $password="trial";
