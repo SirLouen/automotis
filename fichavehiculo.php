@@ -320,9 +320,10 @@
 					<tr>
 				</table>
 				<br>
-				<? if ($_SESSION['nivelusuario'] >= '2') { ?>
-				<table border ='1'>
-					<?php 
+				<? if ($_SESSION['nivelusuario'] >= '2') 
+				{
+					echo "<table border ='1'>";
+				
 						$sql = mysql_query("SELECT * FROM ofertas WHERE vehiculo = $id");
 						$filas = mysql_num_rows($sql);
 						echo "<tr>";
@@ -345,8 +346,8 @@
 							echo "<td><a target='_blank' href='imprimiroferta.php?oferta=".$arrayofertas['id']."'> Imprimir Oferta</a></td>";
 							
 							// Comprobar si ya esta reservado
-							$sql = mysql_select("SELECT vehiculo FROM reservas WHERE vehiculo = '$id'");
-							if (mysql_num_rows($sql) > 0)
+							$sql3 = mysql_query("SELECT vehiculo FROM reservas WHERE vehiculo = '$id'");
+							if (mysql_num_rows($sql3) > 0)
 							{
 								if ($_SESSION['userid'] == $arrayofertas['usuario']) 
 								{
@@ -361,9 +362,9 @@
 							echo "</tr>";
 						}
 						
-					?>
-				</table>
-				<?	
+			
+					echo "</table>";
+				
 				// IF NIVEL USUARIO PARA OFERTAS
 				} 
 			echo "<br>";
