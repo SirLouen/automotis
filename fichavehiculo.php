@@ -44,12 +44,12 @@
  	
  	$consulta = "SELECT * FROM clientes WHERE ";
  	
- 	if ($email_cliente)
+ 	if ($email_cliente != "")
  		$consulta = $consulta."email = '$email_cliente'";
- 	elseif ($movil_cliente)
+ 	elseif ($movil_cliente != "")
  		$consulta = $consulta."movil = '$movil_cliente'";
- 	elseif ($nombre_cliente && $fijo_cliente)
- 		$consulta = $consulta."nombre LIKE '$email_cliente' AND fijo = '$fijo_cliente'";
+ 	elseif ($nombre_cliente != "" && $fijo_cliente != "")
+ 		$consulta = $consulta."nombre LIKE '$nombre_cliente' AND fijo = '$fijo_cliente'";
  	else
  		$consulta = 0;
  		
