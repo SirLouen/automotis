@@ -52,22 +52,6 @@
  		$consulta = $consulta."nombre LIKE '$nombre_cliente' AND fijo = '$fijo_cliente'";
  	else
  		$consulta = 0;
- 		
- 		
-// 	if ($email_cliente)
-//	 	$consulta = $consulta." email = '$email_cliente'";
-// 	
-// 	if ($movil_cliente & !$email_cliente)
-//	 	$consulta = $consulta." movil = '$movil_cliente'";
-// 	elseif ($movil_cliente)
-//	$consulta = $consulta." OR movil = '$movil_cliente'";
-// 	
-// 	if ($fijo_cliente && $nombre_cliente && !$email_cliente && !$movil_cliente)
-//	 	$consulta = $consulta." (fijo = '$fijo_cliente' AND nombre LIKE '%$nombre_cliente%')";
-// 	elseif ($fijo_cliente && $nombre_cliente)
-//	$consulta = $consulta." OR (fijo = '$fijo_cliente' AND nombre LIKE '%$nombre_cliente%')";
-// 	elseif (!$email_cliente && !$movil_cliente && !$fijo_cliente && !$nombre_cliente)
-//	$consulta = 0;
  	
 	$sql = mysql_query($consulta);
  
@@ -83,10 +67,16 @@
 			die('Error: '.mysql_error());
 		}				
 		
-		$sql = mysql_query("SELECT id FROM clientes
-			   WHERE (movil = '$movil_cliente') OR ((fijo = '$fijo_cliente') AND (nombre LIKE '%$nombre_cliente%')) OR
-		 	   (email = '$email_cliente')");
+			$consulta = "SELECT * FROM clientes WHERE ";
+		 	if ($email_cliente != "")
+		 		$consulta = $consulta."email = '$email_cliente'";
+		 	elseif ($movil_cliente != "")
+		 		$consulta = $consulta."movil = '$movil_cliente'";
+		 	elseif ($nombre_cliente != "" && $fijo_cliente != "")
+		 		$consulta = $consulta."nombre LIKE '$nombre_cliente' AND fijo = '$fijo_cliente'";
  	
+ 		$sql = mysql_query($consulta);
+ 		
  		$rowcliente = mysql_fetch_row($sql);
  		$cliente = $rowcliente[0];
 		
