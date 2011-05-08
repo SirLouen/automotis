@@ -385,6 +385,15 @@
 				echo "</tr>";
 				echo "</table>";
 			}
+			elseif ($_SESSION['nivelusuario'] == '1' && $_SESSION['concesionario'] != '10')
+			{
+				$comisionavisador = $comision*0.40;
+				echo "<table border='1'>";
+				echo "<tr>";
+				echo "<td>Numero Magico</td><td>".$comisionavisador."</td>";
+				echo "</tr>";
+				echo "</table>";
+			}
 			
 			echo "<br>";
 			}
