@@ -57,12 +57,12 @@ else
 			echo ("<center>$lang_index_buscador</center><br>");
 			include("buscador.php");
 	
-			if($_SESSION['nivelusuario'] >= 2)
+			if($_SESSION['nivelusuario'] >= 4)
 			{
 				echo("
 				<p>
 					$lang_index_admin_menu:<br>
-					En construccion: <a href='estadisticas.php'>Estadisticas</a>
+					<a href='estadisticas.php'>Estadisticas</a>
 				</p>	
 				");
 			}

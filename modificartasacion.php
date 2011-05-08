@@ -217,7 +217,7 @@
 		<td>Radio CD</td><td> <input type=checkbox name='rcd' value='1' <?php if ($array['rcd']){ echo "checked";} ?>></td>
 	</tr>
 	<tr>
-		<td>Navegador GPS</td><td> <input type=checkbox name='gps' value='1' <?php if ($array['gps']){ echo "checked";} ?>></td>
+		<td>Navegtasacionsubmitador GPS</td><td> <input type=checkbox name='gps' value='1' <?php if ($array['gps']){ echo "checked";} ?>></td>
 	</tr>
 	<tr>
 		<td>Tapiceria Cuero</td><td> <input type=checkbox name='cu' value='1' <?php if ($array['cu']){ echo "checked";} ?>></td>

@@ -33,7 +33,9 @@
  	$nombre_cliente = $_POST['nombre_cliente'];
  	$apellidos_cliente = $_POST['apellidos_cliente'];
  	$cp_cliente = $_POST['cp_cliente'];
- 	$movil_cliente = $_POST['movil_cliente'];
+ 	$movil_cliente =include("config.php");
+include("include/gen_functions.php");
+include("lang/$lang.php"); $_POST['movil_cliente'];
  	$fijo_cliente = $_POST['fijo_cliente'];
  	$email_cliente = $_POST['email_cliente'];
  	$codigocortersia_cliente = $_POST['codigocortersia_cliente'];
