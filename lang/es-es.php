@@ -62,6 +62,7 @@
  $lang_file_cilindrada = "Cilindrada";
  $lang_file_carroceria = "Carroceria";
  $lang_file_color = "Color";
+ $lang_file_plazas = "Plazas";
  $lang_file_ubicacion = "Ubicacion";
  $lang_file_categoria = "Categoria";
  $lang_file_usoanterior = "Uso Anterior";

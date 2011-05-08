@@ -137,7 +137,7 @@
 		else
 		{
 			$sql2 = mysql_query("SELECT id FROM ofertas WHERE vehiculo = '$vehiculo' AND cliente = '$cliente' AND 
-			tasacion = '$tasacion' AND usuario = '$usuariooferta'");
+			tasacion = '$tasacion' AND usuario = '$usuariooferta' ORDER BY fechacreacion DESC ");
 			$rowoferta = mysql_fetch_row($sql2);
 			
 			echo "<a target='_blank' href='imprimiroferta.php?oferta=".$rowoferta[0]."'> Imprimir Oferta</a> <br><br>";
@@ -299,8 +299,11 @@
 						<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_carroceria.': '.$carroceria; ?><br></td>
 					</tr>
 					<tr>
-						<td colspan="2" rowspan="4" style="vertical-align: middle; width: 320px; height: 160px;"><?php echo $extras; ?><br></td>
+						<td colspan="2" rowspan="5" style="vertical-align: middle; width: 320px; height: 160px;"><?php echo $extras; ?><br></td>
 						<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_color.': '.$color; ?><br></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_plazas.': '.$plazas; ?><br></td>
 					</tr>
 					<tr>
 						<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_ubicacion.': '.$ubicacion; ?><br></td>
@@ -372,6 +375,17 @@
 				
 				// IF NIVEL USUARIO PARA OFERTAS
 				} 
+			echo "<br><br>";
+			
+			if ($_SESSION['nivelusuario'] == '2')
+			{ 
+				echo "<table border='1'>";
+				echo "<tr>";
+				echo "<td>Numero Magico</td><td>".$comision."</td>";
+				echo "</tr>";
+				echo "</table>";
+			}
+			
 			echo "<br>";
 			}
 			

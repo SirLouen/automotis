@@ -48,6 +48,8 @@ mysql_query("TRUNCATE TABLE `vehiculos_disponibles`");
 	        $garantia =  $data[$i]; $i++;
 	        $extras = $data[$i]; $i++;
 	        $idv = $data[$i]; $i++;
+	        $plazas = $data[$i]; $i++;
+	        $comision = $data[$i]; $i++;
 
 	       $sql = mysql_query("SELECT * FROM vehiculos WHERE (matricula = '$matricula')");
 	       $login_check = mysql_num_rows($sql);
@@ -61,7 +63,8 @@ mysql_query("TRUNCATE TABLE `vehiculos_disponibles`");
 		    	carroceria = '$carroceria', color = '$color', kilometros = '$kilometros', pvp = '$pvp',
 		    	pvd = '$pvd', tipovehiculo = '$tipovehiculo', ubicacion = '$ubicacion',
 		    	categoria = '$categoria', usoanterior = '$usoanterior', fechaentrada = '$fechaentrada',
-		    	garantia = '$garantia', extras = '$extras', idv = '$idv', fechainsercion = now()
+		    	garantia = '$garantia', extras = '$extras', idv = '$idv', fechainsercion = now(),
+		    	plazas = '$plazas', comision = '$comision'
 		    	WHERE (matricula = '$matricula')";	
 		    	if (!(mysql_query($sql,$conexion)))
 		    	{
@@ -84,11 +87,11 @@ mysql_query("TRUNCATE TABLE `vehiculos_disponibles`");
 		   		$sql = "INSERT INTO vehiculos (matricula, vin, fechamatric, marca, modelo, 
 		    	combustible, potencia, cilindrada, carroceria, color, kilometros, pvp, pvd,
 		    	tipovehiculo, ubicacion, categoria, usoanterior, fechaentrada, garantia, extras,
-		    	idv, fechainsercion)
+		    	idv, fechainsercion, plazas, comision)
 		    	VALUES ('$matricula', '$vin', '$fechamatric', '$marca', '$modelo', '$combustible',
 		    	'$potencia', '$cilindrada', '$carroceria', '$color', '$kilometros', '$pvp', '$pvd',
 		    	'$tipovehiculo', '$ubicacion', '$categoria', '$usoanterior', '$fechaentrada',
-		    	'$garantia', '$extras','$idv',now())";
+		    	'$garantia', '$extras','$idv', now(), '$plazas', '$comision')";
 		    	if (!(mysql_query($sql,$conexion)))
 		    	{
 		    		die('Error: '.mysql_error());
