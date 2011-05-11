@@ -69,7 +69,8 @@ include("lang/$lang.php"); $_POST['movil_cliente'];
 			die('Error: '.mysql_error());
 		}				
 		
-			$consulta = "SELECT * FROM clientes WHERE ";
+			$valorinsertado = mysql_insert_id();
+			$consulta = "SELECT * FROM clientes WHERE id = '$valorinsertado'";
 		 	if ($email_cliente != "")
 		 		$consulta = $consulta."email = '$email_cliente'";
 		 	elseif ($movil_cliente != "")
