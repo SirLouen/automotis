@@ -11,6 +11,7 @@
  
  include("config.php");
  include("lang/$lang.php");
+ include("include/gen_functions.php");
  
  session_start();
  
@@ -33,9 +34,7 @@
  	$nombre_cliente = $_POST['nombre_cliente'];
  	$apellidos_cliente = $_POST['apellidos_cliente'];
  	$cp_cliente = $_POST['cp_cliente'];
- 	$movil_cliente =include("config.php");
-include("include/gen_functions.php");
-include("lang/$lang.php"); $_POST['movil_cliente'];
+ 	$movil_cliente = $_POST['movil_cliente'];
  	$fijo_cliente = $_POST['fijo_cliente'];
  	$email_cliente = $_POST['email_cliente'];
  	$codigocortersia_cliente = $_POST['codigocortersia_cliente'];
@@ -70,13 +69,8 @@ include("lang/$lang.php"); $_POST['movil_cliente'];
 		}				
 		
 			$valorinsertado = mysql_insert_id();
-			$consulta = "SELECT * FROM clientes WHERE id = '$valorinsertado'";
-		 	if ($email_cliente != "")
-		 		$consulta = $consulta."email = '$email_cliente'";
-		 	elseif ($movil_cliente != "")
-		 		$consulta = $consulta."movil = '$movil_cliente'";
-		 	elseif ($nombre_cliente != "" && $fijo_cliente != "")
-		 		$consulta = $consulta."nombre LIKE '$nombre_cliente' AND fijo = '$fijo_cliente'";
+			$consulta = "SELECT id FROM clientes WHERE id = '$valorinsertado'";
+		 	
  	
  		$sql = mysql_query($consulta);
  		
