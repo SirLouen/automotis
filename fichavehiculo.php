@@ -70,7 +70,6 @@
 		
 			$valorinsertado = mysql_insert_id();
 			$consulta = "SELECT id FROM clientes WHERE id = '$valorinsertado'";
-		 	
  	
  		$sql = mysql_query($consulta);
  		
