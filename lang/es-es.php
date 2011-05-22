@@ -99,8 +99,15 @@
  $lang_subasta_extras = "Extras";
  $lang_subasta_tiempo = "Fecha y Hora Limite";
  
+ // ADMINISTRACION.PHP
+ 
+ $lang_admin_tasacion = "Buscador de Tasaciones";
+ 
  // ESTADISTICAS.PHP
  
- $lang_stats_tasacion = "Buscador de Tasaciones";
+ $lang_stats_ofertas = "Analisis Ofertas";
+ $lang_stats_fechaini = "Fecha Inicial";
+ $lang_stats_fechafin = "Fecha Final";
+ $lang_stats_listofertas = "Listado de Ofertas";
  
 ?>

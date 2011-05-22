@@ -68,6 +68,7 @@ else
 			if($_SESSION['nivelusuario'] >= 4)
 			{
 				echo("<center>$lang_index_admin_menu:<br>
+					<a href='administracion.php'>Administracion</a>
 					<a href='estadisticas.php'>Estadisticas</a></center>");
 				echo "<hr>";
 
