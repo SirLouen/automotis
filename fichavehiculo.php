@@ -192,10 +192,8 @@
 		}
 		else
 		{
-			$sql2 = mysql_query("SELECT id FROM reservas WHERE vehiculo = '$idvehiculo'");
-			$rowreserva = mysql_fetch_row($sql2);
-			$numreserva = $rowreserva[0];
-			$sql3 = "INSERT INTO reservas_activas (vehiculo, fecha) VALUES ('$idvehiculo', now())";
+			$numreserva = mysql_insert_id();
+			$sql3 = "INSERT INTO reservas_activas (vehiculo, fecha, reserva) VALUES ('$idvehiculo', now(), '$numreserva')";
 			if (!(mysql_query($sql3,$conexion)))
 			{
 			die('Error: '.mysql_error());

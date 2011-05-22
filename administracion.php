@@ -61,6 +61,23 @@ if ($_SESSION['nivelusuario'] >= 4)
 		include("infosubastas.php");
 		include("footer.php");
 	}
+	
+	elseif (isset ($_POST['borrareservasubmit'])) 
+	{
+		$vehiculo = $_POST['vehiculo'];
+		$sql = "DELETE FROM reservas_activas WHERE vehiculo = '$vehiculo'";
+		if (!(mysql_query($sql,$conexion)))
+		{
+			die('Error: '.mysql_error());
+		}
+		else
+		{
+			echo "Reserva Borrada<br>";
+			echo "<a href='administracion.php'><img src='back.jpg' alt='Home' width='30' height='30'></a>";
+			include ("footer.php");
+		}
+		
+	}
 
 	else
 	{
@@ -84,8 +101,8 @@ if ($_SESSION['nivelusuario'] >= 4)
 		</form>
 		<hr>
 		<table border="1" align="center">
-		<tr><td colspan ="4" align="center">Buscador de Subastas</td></tr>
-		<tr><td>Num Id</td><td>Fecha Creacion</td><td>Marca</td><td>Modelo</td></tr>
+		<tr><td colspan ="5" align="center">Buscador de Subastas</td></tr>
+		<tr><td>Num Id</td><td>Fecha Creacion</td><td>Marca</td><td>Modelo</td><td>Estado</td></tr>
 		
 		<?
 		$maxsubastas = 7;
@@ -96,6 +113,12 @@ if ($_SESSION['nivelusuario'] >= 4)
 		{
 			$arraysubastas = mysql_fetch_array($sql);
 			$idsubasta = $arraysubastas['id'];
+			$activa = $arraysubastas['activa'];
+			if ($activa)
+				$activa = "ACTIVA";
+			else
+				$activa = "FINALIZADA";
+			
 			echo "<tr>";
 			echo "<td><a href='administracion.php?idsubasta=".$idsubasta."'>".$idsubasta."</td>";
 			echo "<td>".$arraysubastas['fechacreacion']."</td>";
@@ -103,14 +126,56 @@ if ($_SESSION['nivelusuario'] >= 4)
 			$sql2 = mysql_query("SELECT * FROM vehiculos WHERE id = '$vehiculo'");
 			$arrayvehiculo = mysql_fetch_array($sql2);
 			echo "<td>".$arrayvehiculo['marca']."</td>";
-			echo "<td>".$arrayvehiculo['modelo']."</td>";			
+			echo "<td>".$arrayvehiculo['modelo']."</td>";
+			echo "<td>".$activa."</td>";			
 			
 			echo "</tr>";
 		 }
-		 ?>
-		</table>
+		 
+		echo "</table>";
+		echo "<hr>";
 		
-	<?php
+		echo "<table border='1' align='center'>";
+		echo "<tr><td colspan ='6' align='center'>Reservas Activas</td></tr>";
+		echo "<tr><td>Matricula</td><td>Marca</td><td>Modelo</td><td>Usuario</td><td>Dias Reserva</td><td>Borrar Reserva</td></tr>";	
+
+		$sql3 = mysql_query("SELECT * FROM reservas_activas");
+		$filas = mysql_num_rows($sql3);
+		for ($i=0;$i<$filas;$i++)
+		{
+			$arrayreservasactivas = mysql_fetch_array($sql3);
+			$reserva = $arrayreservasactivas['reserva'];
+			$sql4 = mysql_query("SELECT * FROM reservas WHERE id = '$reserva'");
+			$arrayreservas = mysql_fetch_array($sql4);
+			$vehiculo = $arrayreservasactivas['vehiculo'];
+			$sql5 = mysql_query("SELECT * FROM vehiculos WHERE id = '$vehiculo'");
+			$arrayvehiculo = mysql_fetch_array($sql5);
+			$usuario = $arrayreservas['usuario'];
+			$sql6 = mysql_query("SELECT * FROM usuarios WHERE userid = '$usuario'");
+			$arrayusuario = mysql_fetch_array($sql6);
+			
+			$today = juliantojd(date("n"),date("j"),date("Y"));
+			$fechaentry = $arrayreservasactivas['fecha'];
+			$fechadiv = split("-",$fechaentry);
+			$fechaentrada = juliantojd($fechadiv[1],$fechadiv[2],$fechadiv[0]);
+			
+			$diasreservado = $today - $fechaentrada;
+			
+			echo "<tr>";
+			echo "<td>".$arrayvehiculo['matricula']."</td>";
+			echo "<td>".$arrayvehiculo['marca']."</td>";
+			echo "<td>".$arrayvehiculo['modelo']."</td>";
+			echo "<td>".$arrayusuario['nombre']."</td>";
+			echo "<td>".$diasreservado."</td>";
+			echo "<td>";
+			echo "<form method='post' action='?'>";
+			echo "<input type=hidden name=vehiculo value='$vehiculo'>";
+			echo "<input type=submit name='borrareservasubmit' value='Borrar'>";
+			echo "</td>"; 			
+			echo "</tr>";
+			
+		}	
+		echo "</table>";
 		include("footer.php");
 	}
 }	
