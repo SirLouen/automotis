@@ -46,8 +46,23 @@
       <option value="seminuevo">Vehiculo Seminuevo</option>
       </select></td>
     </tr>
-    <tr> 
-      <td>&nbsp;</td>
+    <? if ($_SESSION['nivelusuario'] >= 4)
+       {
+       	echo "<tr>
+    	<td>".$lang_find_categoria."</td>
+       	<td><select name='categoria'>
+      	<option selected value='TODOS'>Todos</option>
+      	<option value='COMPRAVENTA'>Compraventa</option>
+      	<option value='PARTICULAR'>Particular</option>
+      	</select></td>
+    	<tr>";
+       }
+       else
+       {
+       	echo "<tr><td><input type='hidden' name='categoria' value='PARTICULAR'></td></tr>";
+       }
+     ?>
+      
       <td><input type="submit" name="submit" value="OK"></td>
     </tr>
   </table>
@@ -119,6 +134,11 @@ if (isset ($_POST['submit']))
 		$fechamatricmayor = $anyomayor."-".date('n')."-".date('j');
 	}
 	
+	$categoria = $_POST['categoria'];
+	
+	if ($categoria == "TODOS")
+		$categoria = "";	
+	
 	
 	$sql = mysql_query("SELECT vehiculos.* FROM vehiculos_disponibles, vehiculos
 			WHERE (vehiculos_disponibles.matricula = vehiculos.matricula) AND
@@ -126,7 +146,8 @@ if (isset ($_POST['submit']))
 		    AND (vehiculos.$nombreprecio <= '$preciomayor') AND (combustible LIKE '%$combustible%')
 		    AND (vehiculos.kilometros >= '$kmmenor') AND (vehiculos.kilometros <= '$kmmayor')
 		    AND (vehiculos.fechamatric >= '$fechamatricmenor') AND (vehiculos.fechamatric <= '$fechamatricmayor')
-			AND (marca LIKE '%$marca%') AND (modelo LIKE '%$modelo%') ORDER BY now()-fechaentrada DESC");
+			AND (marca LIKE '%$marca%') AND (modelo LIKE '%$modelo%') AND (vehiculos.categoria LIKE '%$categoria%')
+			ORDER BY now()-fechaentrada DESC");
 		
 	$numrows = mysql_num_rows($sql);
 	
@@ -152,7 +173,10 @@ if (isset ($_POST['submit']))
 			$sql2 = mysql_query("SELECT * FROM reservas_activas WHERE vehiculo = '$vehiculo'");
 			$numerovehiculos = 0;
 			$numerovehiculos = mysql_num_rows($sql2);
-			if ($numerovehiculos > 0)
+			$sql3 = mysql_query("SELECT subasta FROM vehiculos WHERE id = '$vehiculo'");
+			$rowvehiculos = mysql_fetch_row($sql3);
+			$subastaactiva = $rowvehiculos[0];
+			if ($numerovehiculos > 0 || $subastaactiva)
 				echo "<tr style='background-color:red;'>";
 			else
 				echo "<tr>";			

@@ -41,5 +41,17 @@ function convertir_fecha_normal($fecha_datetime)
 	$day = $day[0].$day[1];
 	return $day.'/'.$date_array[1].'/'.$date_array[0];
 }
+
+function convertir_fecha_normal_completa($fecha_datetime)
+{	
+	$date_array = explode("-", $fecha_datetime);
+	$hora_array = explode (":", $date_array[2]);
+	$day = $date_array[2];
+	$day = $day[0].$day[1];
+	$hora = $hora_array[0];
+	$hora = $hora[3].$hora[4];
+	return $day.'/'.$date_array[1].'/'.$date_array[0]." ".$hora.":".$hora_array[1].":".$hora_array[2];
+}
+
  
 ?>

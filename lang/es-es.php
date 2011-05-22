@@ -44,6 +44,7 @@
  $lang_find_importe = "Precio";
  $lang_find_combustible = "Combustible";
  $lang_find_tipovo = "Tipo VO";
+ $lang_find_categoria = "Categoria";
  
  $lang_find_fail = "No se han encontrado vehiculos con esa seleccion";
  
@@ -68,6 +69,10 @@
  $lang_file_usoanterior = "Uso Anterior";
  $lang_file_extras = "Extras";
  $lang_file_garantia = "Garantia";
+ $lang_file_comision = "Numero Expendiente";
+ $lang_file_subasta = "Crear Subasta";
+ $lang_file_diassubasta = "Dias Limite";
+ $lang_file_borrarsubasta = "Borrar Subasta";
  
  // CARGADOR.PHP
  
@@ -75,5 +80,23 @@
  $lang_loader_mensajeemail = "La carga del fichero de VO se ha realizado correctamente";
  $lang_loader_asuntoemail = "Carga VO Correcta";
  
+ // SUBASTAS.PHP
+ 
+ $lang_subasta_matricula = "Matricula";
+ $lang_subasta_marca = "Marca";
+ $lang_subasta_modelo = "Modelo";
+ $lang_subasta_fechamatric = "Fecha Matriculacion";
+ $lang_subasta_kilometros = "Kilometros";
+ $lang_subasta_combustible = "Combustible";
+ $lang_subasta_pvd = "Precio Salida";
+ $lang_subasta_potencia = "Potencia";
+ $lang_subasta_cilindrada = "Cilindrada";
+ $lang_subasta_carroceria = "Carroceria";
+ $lang_subasta_color = "Color";
+ $lang_subasta_plazas = "Plazas";
+ $lang_subasta_ubicacion = "Ubicacion";
+ $lang_subasta_usoanterior = "Uso Anterior";
+ $lang_subasta_extras = "Extras";
+ $lang_subasta_tiempo = "Fecha y Hora Limite";
  
 ?>

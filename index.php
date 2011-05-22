@@ -51,9 +51,16 @@ else
 			if ($_SESSION['nivelusuario'] >= 3)
 			{
 				include("consultatasacion.php");
+				echo "<hr>";
 			}
 			
-			echo "<hr>";
+			if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
+			{
+				echo("<center><a href='subastas.php'>Acceso a Subastas</a></center>");
+				echo "<hr>";
+			}
+			
+			
 			echo ("<center>$lang_index_buscador</center><br>");
 			include("buscador.php");
 	

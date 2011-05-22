@@ -11,7 +11,7 @@
  
  include("config.php");
  include("lang/$lang.php");
- include("include/gen_functions.php");
+ include_once("include/gen_functions.php");
  
  session_start();
  
@@ -206,6 +206,48 @@
 		include("footer.php");
  } 
  
+ elseif (isset ($_POST['subastasubmit']))
+ {
+ 	$vehiculo = $_POST['idvehiculo'];
+ 	$diaslimite = $_POST['diaslimite'];
+ 	$diaactual = date("d");
+ 	$diafinal = $diaslimite + $diaactual; 
+ 	$fechalimite = date("Y-m");
+ 	$horafinal = date("H:i:s");
+ 	$fechalimite = $fechalimite."-".$diafinal." ".$horafinal;
+ 	
+ 	$activa = "1";
+ 	
+ 	$sql = "INSERT INTO subastas (vehiculo, fechalimite, fechacreacion, activa)
+	 			VALUES ('$vehiculo', '$fechalimite', now(), '$activa')";
+	 	
+	if (!(mysql_query($sql,$conexion)))
+	{
+		die('Error: '.mysql_error());
+	}
+ 	else
+ 	{
+ 		$idsubasta = mysql_insert_id();
+ 			
+ 		$sql2 = mysql_query("UPDATE vehiculos SET subasta = '$idsubasta' WHERE id = '$vehiculo'");
+ 		
+ 		echo "Vehiculo Insertado en Subasta<br><br>";
+ 		include("footer.php");
+ 	} 	
+ 	
+ 	
+ }
+ 
+ elseif (isset ($_POST['borrarsubastasubmit']))
+ { 		
+ 	$vehiculo = $_POST['idvehiculo'];
+ 	$subasta = $_POST['idsubasta'];
+ 	$sql = mysql_query("UPDATE subastas SET activa = '0' WHERE id = '$subasta'");
+ 	$sql2 = mysql_query("UPDATE vehiculos SET subasta = '' WHERE id = '$vehiculo'");
+ 	echo "Vehiculo Borrado de Subasta<br><br>";
+ 	include("footer.php"); 
+ }
+  
  else
  {
  
@@ -371,29 +413,71 @@
 				
 				// IF NIVEL USUARIO PARA OFERTAS
 				} 
-			echo "<br><br>";
-			
-			if ($_SESSION['nivelusuario'] == '2')
-			{ 
-				echo "<table border='1'>";
-				echo "<tr>";
-				echo "<td>Numero Magico</td><td>".$comision."</td>";
-				echo "</tr>";
-				echo "</table>";
+				echo "<br><br>";
+				
+				if ($_SESSION['nivelusuario'] == '2')
+				{ 
+					echo "<table border='1'>";
+					echo "<tr>";
+					echo "<td>$lang_file_comision</td><td>".$comision."</td>";
+					echo "</tr>";
+					echo "</table>";
+				}
+				elseif ($_SESSION['nivelusuario'] == '1' && $_SESSION['concesionario'] != '10')
+				{
+					$comisionavisador = $comision*0.40;
+					echo "<table border='1'>";
+					echo "<tr>";
+					echo "<td>$lang_file_comision</td><td>".$comisionavisador."</td>";
+					echo "</tr>";
+					echo "</table>";
+				}
+				
+				echo "<br><br>";
+				
+				$sql = mysql_query("SELECT subasta FROM vehiculos WHERE id = '$id'");
+				$rowvehiculo = mysql_fetch_row($sql);
+				$idsubasta = $rowvehiculo[0];
+				
+				if ($_SESSION['nivelusuario'] >= '5')
+				{
+					if (!$idsubasta)
+					{
+						echo "<table border='1'>";
+						echo "<tr>";
+						echo "<td colspan='2'>$lang_file_subasta</td>";
+						echo "</tr>";
+						echo "<tr>";
+						echo "<td>$lang_file_diassubasta</td>";
+						echo "<td>";
+						echo "<form method='post' action='fichavehiculo.php'>
+							  <input type='hidden' name='idvehiculo' value='".$id."'>
+							  <input type='text' size=2 maxlength='2' name='diaslimite' value='3'>
+							  <input type=submit name='subastasubmit' value='Crear'>";
+						echo "</td>";
+						echo "</tr>";
+						echo "</table>";
+					}
+					
+					else
+					{					
+						echo "<table border='1'>";
+						echo "<tr>";
+						echo "<td>$lang_file_borrarsubasta</td>";
+						echo "<td>Id: $idsubasta</td>";
+						echo "<td>";
+						echo "<form method='post' action='fichavehiculo.php'>
+							  <input type='hidden' name='idvehiculo' value='".$id."'>
+							  <input type='hidden' name='idsubasta' value='".$idsubasta."'>
+							  <input type=submit name='borrarsubastasubmit' value='Borrar'>";
+						echo "</td>";
+						echo "</tr>";
+						echo "</table>";
+					}
+				}
+				
 			}
-			elseif ($_SESSION['nivelusuario'] == '1' && $_SESSION['concesionario'] != '10')
-			{
-				$comisionavisador = $comision*0.40;
-				echo "<table border='1'>";
-				echo "<tr>";
-				echo "<td>Numero Magico</td><td>".$comisionavisador."</td>";
-				echo "</tr>";
-				echo "</table>";
-			}
-			
-			echo "<br>";
-			}
-			
+		// FIN del While	
 		}
 		else 
 		{
