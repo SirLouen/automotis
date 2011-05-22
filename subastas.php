@@ -61,7 +61,7 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
 
 			<table style="text-align: left; width: 800px;" border="1" cellpadding="2" cellspacing="2">
 				<tr>
-					<td colspan = "4" style="vertical-align: middle;"> <h2>Vehiculo en Subasta Actual</h2></td>
+					<td colspan = "4" align="center" style="vertical-align: middle;"> <h2>Vehiculo en Subasta Actual</h2></td>
 				</tr> 
 				<tr>
 					<td colspan="2" rowspan="6" style="vertical-align: top; width: 320px;"><a target="_blank" href="imagenes.php?i=0&amp;matricula=<?php echo $matricula;?>"><img style="width: 330px; height: 240px;" alt="" src="./imagenes/<? echo $matricula; ?>/tn/1.jpg"></a><br></td>
@@ -112,7 +112,7 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
 					<td colspan ="2" style="vertical-align: middle; height: 40px;">
 					
 					<?php
-					$sql = mysql_query("SELECT * FROM subastas_pujas WHERE usuario = '$usuario'");
+					$sql = mysql_query("SELECT * FROM subastas_pujas WHERE usuario = '$usuario' AND subasta = '$idsubasta'");
 					if(!mysql_num_rows($sql))
 					{
 						$pvdpuja = $pvd + 100;

@@ -56,15 +56,18 @@ if ($_SESSION['nivelusuario'] >= 4)
 		include("footer.php");
 
 	}
+	elseif ($_GET['idsubasta'])
+	{
+		include("infosubastas.php");
+		include("footer.php");
+	}
 
 	else
 	{
 	
 	?>
 	
-		<center>Buscador de Tasaciones</center>
 		<form method='post' action='?'>
-		
 		<table border="0" align="center">
 		
 			<tr>
@@ -79,9 +82,36 @@ if ($_SESSION['nivelusuario'] >= 4)
 		
 			</table>
 		</form>
+		<hr>
+		<table border="1" align="center">
+		<tr><td colspan ="4" align="center">Buscador de Subastas</td></tr>
+		<tr><td>Num Id</td><td>Fecha Creacion</td><td>Marca</td><td>Modelo</td></tr>
+		
+		<?
+		$maxsubastas = 7;
+		
+		$sql = mysql_query("SELECT * FROM subastas ORDER BY id DESC");
+		$filas = mysql_num_rows($sql);
+		for ($i=0;$i<$maxsubastas&&$i<$filas;$i++)
+		{
+			$arraysubastas = mysql_fetch_array($sql);
+			$idsubasta = $arraysubastas['id'];
+			echo "<tr>";
+			echo "<td><a href='estadisticas.php?idsubasta=".$idsubasta."'>".$idsubasta."</td>";
+			echo "<td>".$arraysubastas['fechacreacion']."</td>";
+			$vehiculo = $arraysubastas['vehiculo'];
+			$sql2 = mysql_query("SELECT * FROM vehiculos WHERE id = '$vehiculo'");
+			$arrayvehiculo = mysql_fetch_array($sql2);
+			echo "<td>".$arrayvehiculo['marca']."</td>";
+			echo "<td>".$arrayvehiculo['modelo']."</td>";			
+			
+			echo "</tr>";
+		 }
+		 ?>
+		</table>
 		
 	<?php
-	
+		include("footer.php");
 	}
 }	
 

@@ -63,15 +63,14 @@ else
 			
 			echo ("<center>$lang_index_buscador</center><br>");
 			include("buscador.php");
+			echo "<hr>";
 	
 			if($_SESSION['nivelusuario'] >= 4)
 			{
-				echo("
-				<p>
-					$lang_index_admin_menu:<br>
-					<a href='estadisticas.php'>Estadisticas</a>
-				</p>	
-				");
+				echo("<center>$lang_index_admin_menu:<br>
+					<a href='estadisticas.php'>Estadisticas</a></center>");
+				echo "<hr>";
+
 			}
 		}
 
