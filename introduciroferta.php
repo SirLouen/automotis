@@ -34,7 +34,7 @@
 	
 	<tr>
 		<td>Codigo Cortesia:</td>
-		<td><select name = 'codigocortersia_cliente'> 
+		<td><select name = 'codigocortesia_cliente'> 
 		<option value="sr" selected>Sr.</option>
 		<option value="sra" >Sra.</option>
 		<option value="srta" >Srta.</option></select></td>

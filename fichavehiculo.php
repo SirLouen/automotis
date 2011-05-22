@@ -37,7 +37,7 @@
  	$movil_cliente = $_POST['movil_cliente'];
  	$fijo_cliente = $_POST['fijo_cliente'];
  	$email_cliente = $_POST['email_cliente'];
- 	$codigocortesia_cliente = $_POST['codigocotersia_cliente'];
+ 	$codigocortesia_cliente = $_POST['codigocortesia_cliente'];
  	$tipo_cliente = $_POST['tipo_cliente'];
  	
  	// Insertamos primero el cliente en la tabla de clientes si no existe, sino actualizamos
@@ -88,7 +88,7 @@
 		if ($array['fijo']){ $fijo_cliente =  $array['fijo']; $existe++; }
 		if ($array['email']){ $email_cliente =  $array['email']; $existe++; }
 		if ($array['cp']){ $cp_cliente =  $array['cp']; $existe++; }
-		if ($array['codigocotersia']){ $codigocotersia_cliente =  $array['codigocotersia']; $existe++; }
+		if ($array['codigocortesia']){ $codigocortesia_cliente =  $array['codigocortesia']; $existe++; }
 		if ($array['tipo']){ $tipo_cliente =  $array['tipo']; $existe++; }
 		
 		if ($existe != 8)
@@ -217,7 +217,7 @@
 
 			$mensaje = "Datos de la Reserva:<br><br>
 						Tipo Cliente :".$arraycliente['tipo']."<br>
-						Codigo Cotersia Cliente: ".$arraycliente['codigocortesia']."<br>
+						Codigo Cortesia Cliente: ".$arraycliente['codigocortesia']."<br>
 						Nombre Cliente: ".$arraycliente['nombre']."<br>
 						Apellido Cliente: ".$arraycliente['apellidos']."<br>
 						Direccion Cliente: ".$arraycliente['direccion']."<br>
