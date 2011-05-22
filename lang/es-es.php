@@ -106,8 +106,13 @@
  // ESTADISTICAS.PHP
  
  $lang_stats_ofertas = "Analisis Ofertas";
+ $lang_stats_reservas = "Analisis Reservas";
+ $lang_stats_tasaciones = "Analisis Tasaciones";
  $lang_stats_fechaini = "Fecha Inicial";
  $lang_stats_fechafin = "Fecha Final";
  $lang_stats_listofertas = "Listado de Ofertas";
+ $lang_stats_listreservas = "Listado de Reservas";
+ $lang_stats_listtasaciones = "Listado de Tasaciones";
+ $lang_stats_total = "Total";
  
 ?>
