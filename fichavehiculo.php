@@ -37,7 +37,7 @@
  	$movil_cliente = $_POST['movil_cliente'];
  	$fijo_cliente = $_POST['fijo_cliente'];
  	$email_cliente = $_POST['email_cliente'];
- 	$codigocortersia_cliente = $_POST['codigocortersia_cliente'];
+ 	$codigocortesia_cliente = $_POST['codigocotersia_cliente'];
  	$tipo_cliente = $_POST['tipo_cliente'];
  	
  	// Insertamos primero el cliente en la tabla de clientes si no existe, sino actualizamos
@@ -88,7 +88,7 @@
 		if ($array['fijo']){ $fijo_cliente =  $array['fijo']; $existe++; }
 		if ($array['email']){ $email_cliente =  $array['email']; $existe++; }
 		if ($array['cp']){ $cp_cliente =  $array['cp']; $existe++; }
-		if ($array['codigocortersia']){ $codigocortersia_cliente =  $array['codigocortersia']; $existe++; }
+		if ($array['codigocotersia']){ $codigocotersia_cliente =  $array['codigocotersia']; $existe++; }
 		if ($array['tipo']){ $tipo_cliente =  $array['tipo']; $existe++; }
 		
 		if ($existe != 8)
@@ -163,11 +163,12 @@
  	$mes_cliente = $_POST['mes_cliente'];
  	$anyo_cliente = $_POST['anyo_cliente'];
  	$fechanacimiento = $anyo_cliente."-".$mes_cliente."-".$dia_cliente;
- 	$codigocortersia_cliente = $_POST['codigocortersia_cliente'];
+ 	$codigocortesia_cliente = $_POST['codigocortesia_cliente'];
  	$tipo_cliente = $_POST['tipo_cliente'];
  	
  	$idcliente = $_POST['idcliente'];
  	$importe = $_POST['importe'];
+ 	$importeideal = $_POST['importeideal'];
  	$idvehiculo = $_POST['idvehiculo'];
  	$idoferta = $_POST['idoferta'];
  	
@@ -192,6 +193,47 @@
 		}
 		else
 		{
+			
+			// ENVIO DE EMAIL CON LA RESERVA
+			
+			$sql2 = mysql_query("SELECT * FROM usuarios WHERE userid = '$usuarioreserva'");
+			$arrayusuario = mysql_fetch_array($sql2);
+			$nombreusuario = $arrayusuario['nombre'];
+			
+			$sql3 = mysql_query("SELECT * FROM vehiculos WHERE id = '$idvehiculo'");
+			$arrayvehiculo = mysql_fetch_array($sql3);
+			$matricula = $arrayvehiculo['matricula'];
+			
+			$sql4 = mysql_query("SELECT * FROM clientes WHERE id = '$idcliente'");
+			$arraycliente = mysql_fetch_array($sql4);
+
+			
+			$cabeceras  = "MIME-Version: 1.0\r\n";
+			$cabeceras .= "Content-type: text/html; charset=UTF-8\r\n";
+			$cabeceras .= "To: $adminname <$adminemail>\r\n";
+			$cabeceras .= "From: Peugeot Ibericar <$adminemail>\r\n";
+
+			$asunto = "Reserva de ".$matricula." por ".$nombreusuario;
+
+			$mensaje = "Datos de la Reserva:<br><br>
+						Tipo Cliente :".$arraycliente['tipo']."<br>
+						Codigo Cotersia Cliente: ".$arraycliente['codigocortesia']."<br>
+						Nombre Cliente: ".$arraycliente['nombre']."<br>
+						Apellido Cliente: ".$arraycliente['apellidos']."<br>
+						Direccion Cliente: ".$arraycliente['direccion']."<br>
+						CP Cliente: ".$arraycliente['cp']."<br>
+						DNI Cliente: ".$arraycliente['dni']."<br>
+						F.Nacimiento Cliente: ".$arraycliente['fechanacimiento']."<br>
+						Movil Cliente: ".$arraycliente['movil']."<br>
+						Fijo Cliente: ".$arraycliente['fijo']."<br>
+						E-Mail Cliente: ".$arraycliente['email']."<br>
+						Matricula Vehiculo: $matricula <br>
+						Usuario de la Reserva: $nombreusuario <br>
+						Importe de la Reserva: $importe <br>
+						Importe Ideal de la Reserva: $importeideal <br>";
+	
+		    mail ($adminemail,$asunto,$mensaje,$cabeceras);
+			
 			$numreserva = mysql_insert_id();
 			$sql3 = "INSERT INTO reservas_activas (vehiculo, fecha, reserva) VALUES ('$idvehiculo', now(), '$numreserva')";
 			if (!(mysql_query($sql3,$conexion)))

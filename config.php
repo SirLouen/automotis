@@ -16,6 +16,7 @@ $user="trial";
 $password="trial";
 $pass="trial";
 $adminemail = "mcamargo@peugeotcadiz.com";
+$adminname = "Manuel Camargo";
 
 include("lang/$lang.php");
 

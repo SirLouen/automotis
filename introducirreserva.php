@@ -26,7 +26,7 @@
  
  $porcentajeentcuenta = 0.015; 
   
- $importeideal = ($arrayvehiculo['pvp'] + $arrayoferta['sobreprecio'] - $arrayoferta['descuento'])*$porcentajeentcuenta;
+ $importeideal = floor(($arrayvehiculo['pvp'] + $arrayoferta['sobreprecio'] - $arrayoferta['descuento'])*$porcentajeentcuenta);
   
 ?>
 
@@ -52,7 +52,7 @@
 	
 	<tr>
 		<td>Codigo Cortesia:</td>
-		<td><select name = 'codigocortersia_cliente'> 
+		<td><select name = 'codigocortesia_cliente'> 
 		<option value="sr" <?php if($arraycliente['codigocortesia'] == "sr"){ echo "selected"; } ?>>Sr.</option>
 		<option value="sra" <?php if($arraycliente['codigocortesia'] == "sra"){ echo "selected"; } ?>>Sra.</option>
 		<option value="srta" <?php if($arraycliente['codigocortesia'] == "srta"){ echo "selected"; } ?>>Srta.</option></select></td>
@@ -108,7 +108,10 @@
 	</tr>
 	
 	<tr>
-		<td>Importe Ideal:</td><td><?php echo floor($importeideal); ?> euros</td>
+		<td>
+		<input type='hidden' name='importeideal' value='<?php echo $importeideal; ?>' size=20 maxlength='20'>
+		Importe Ideal:</td><td><?php echo $importeideal; ?> euros
+		</td>
 	</tr>
 	<tr>
 		<td>Importe:</td><td> <input type='text' name='importe' value='' size=20 maxlength='20'></td>

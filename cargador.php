@@ -109,9 +109,10 @@ mysql_query("TRUNCATE TABLE `vehiculos_disponibles`");
 	    fclose($handle);
 	}
 	
-	$cabeceras  = 'MIME-Version: 1.0' . "\r\n";
-	$cabeceras .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-	$cabeceras .= 'From: Peugeot Ibericar' . "\r\n";
+	$cabeceras  = "MIME-Version: 1.0\r\n";
+	$cabeceras .= "Content-type: text/html; charset=UTF-8\r\n";
+	$cabeceras .= "To: $adminname <$adminemail>\r\n";
+	$cabeceras .= "From: Peugeot Ibericar <$adminemail>\r\n";
 	$mensaje = $lang_loader_mensajeemail;
 	$asunto = $lang_loader_asuntoemail;
 	
