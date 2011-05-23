@@ -399,9 +399,15 @@
 						 <input type='hidden' name='matricula' value='<?php echo "$matricula"; ?> '>
 						 <input type='hidden' name='idvehiculo' value='<?php echo "$id"; ?> '>
 						 <input type=submit name='ofertasubmit' value='Crear Oferta'>
-						<?	} ?>
-						</td>
-						<td style="vertical-align: middle; height: 40px;"><strike>Imprimir Percha Proximamente</strike></td>
+						<?	}
+						echo "</td>";
+						echo "<td style='vertical-align: middle; height: 40px;''>";
+						if ($_SESSION['nivelusuario'] >= '2')
+						{
+							echo "<a href=imprimirpercha.php?id=".$id.">Imprimir Percha</a>";
+						}
+						echo "</td>";
+						?>
 						<td style="vertical-align: top; height: 40px;"><?php echo $lang_file_garantia.': '.$garantia; ?><br></td>
 					<tr>
 				</table>
