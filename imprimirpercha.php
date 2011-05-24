@@ -38,34 +38,34 @@ $fechamatric = fecha_normal($arrayvehiculo['fechamatric']);
  
 //width: 95px; height: 72px;
 $html = "
+	
 
-<table style='text-align: left; width: 100%;' border='0' cellpadding='2' cellspacing='2'>
+<table style='width: 100%;' border='0' cellpadding='2' cellspacing='2'>
 	<tr>
-		<td rowspan='3' style='vertical-align: middle; text-align: center; width: 250px;'><img style='' alt='' src='./imagenes/podl.png'></td>
-		<td style='vertical-align: top text-align: center; text-align: center; width: 400px; background-color: silver;'><h4>1.Certificacion del Estado del Vehiculo</h4></td>
+		<td colspan ='2' style='text-align: center; background-color: silver; background-color: silver;'><h1>Hoja de Informacion del Vehiculo</h1></td>
 	</tr>
 	<tr align='center'>
+		<td colspan='2'><br></td>
+	</tr>			
+	<tr>
+		<td style='background-color: silver; text-align: center; background-color: silver;'><h4>1. Certificacion del Estado del Vehiculo</h4></td>
 		<td style='vertical-align: top; text-align: center;'><h4>2. Revision de los 99 Puntos de Control</h4></td>
 	</tr>
 	<tr align='center'>
-		<td style='vertical-align: top; text-align: center; background-color: silver;'><h4>3. Garantia Peugeot de hasta 24 Meses</h4></td>
-	</tr>
-	<tr>
-		<td rowspan='3' style='vertical-align: middle; text-align: center; width: 250px;'><img style='' alt='' src='./imagenes/logo_ibericar.jpg'></td>
-		<td style='vertical-align: top; text-align: center;'><h4>4. Servicio de Vehiculos de Sustitucion Opcional</h4></td>
+		<td style='vertical-align: top; text-align: center;'><h4>3. Garantia Peugeot de hasta 36 Meses</h4></td>
+		<td style='vertical-align: top; text-align: center; background-color: silver; width: 250px;'><h4>4. Servicio Vehiculos Sustitucion Opcional</h4></td>
 	</tr>
 	<tr align='center'>
 		<td style='vertical-align: top; text-align: center; background-color: silver;'><h4>5. Primera Revision Gratuita a los 2.500KM</h4></td>
-	</tr>
-	<tr align='center'>
 		<td style='vertical-align: top; text-align: center;'><h4>6. Precio 'Llave en Mano'</h4></td>
 	</tr>
 	<tr>
-		<td rowspan='2' style='vertical-align: top; text-align: center;'><br></td>
-		<td style='vertical-align: top; text-align: center; background-color: silver;'><h4>7. Oferta de Financiacion Especial Peugeot</h4></td>
+		<td style='vertical-align: top; text-align: center; '><h4>7. Oferta de Financiacion Especial Peugeot</h4></td>
+		<td style='vertical-align: top; text-align: center; background-color: silver;'><h4>8. Kilometraje Real Garantizado</h4></td>
 	</tr>
 	<tr align='center'>
-		<td style='vertical-align: top; text-align: center;'><h4>8. El respaldo de una gran Marca: PEUGEOT</h4></td>
+		<td style='vertical-align: top text-align: center; text-align: center; background-color: silver;'><h4>9.Asistencia Nacional las 24 Horas</h4></td>
+		<td style='vertical-align: top; text-align: center;'><h4>10. Respaldo de una gran Marca:PEUGEOT</h4></td>
 	</tr>
 	<tr align='center'>
 		<td colspan='2'><br></td>
@@ -146,7 +146,14 @@ $html = "
 	<tr>
 		<td colspan='2' rowspan='1' style='vertical-align: top; text-align: center;'><h3>".$arrayvehiculo['extras']."</h3></td>
 	</tr>
-
+	<tr align='center'>
+		<td colspan='2'><br></td>
+	</tr>
+	<tr>
+		<td rowspan='3' style='vertical-align: middle; text-align: center; width: 150px;'><img style='' alt='' src='./imagenes/podl.png'>
+		<td rowspan='3' style='vertical-align: middle; text-align: center; width: 150px;'><img style='' alt='' src='./imagenes/logo_ibericar.jpg'></td>
+	</tr>
+	
 </table>
 		
 	";

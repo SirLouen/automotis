@@ -404,7 +404,7 @@
 						echo "<td style='vertical-align: middle; height: 40px;''>";
 						if ($_SESSION['nivelusuario'] >= '2')
 						{
-							echo "<a href=imprimirpercha.php?id=".$id.">Imprimir Percha</a>";
+							echo "<a target='_blank' href=imprimirpercha.php?id=".$id.">Imprimir Percha</a>";
 						}
 						echo "</td>";
 						?>
