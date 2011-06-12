@@ -64,8 +64,9 @@ if ($_SESSION['nivelusuario'] >= 4)
 	
 	elseif (isset ($_POST['borrareservasubmit'])) 
 	{
-		$vehiculo = $_POST['vehiculo'];
-		$sql = "DELETE FROM reservas_activas WHERE vehiculo = '$vehiculo'";
+		$idvehiculo = $_POST['vehiculo'];
+
+		$sql = "DELETE FROM reservas_activas WHERE vehiculo = '$idvehiculo'";
 		if (!(mysql_query($sql,$conexion)))
 		{
 			die('Error: '.mysql_error());
@@ -137,7 +138,7 @@ if ($_SESSION['nivelusuario'] >= 4)
 		
 		echo "<table border='1' align='center'>";
 		echo "<tr><td colspan ='6' align='center'>Reservas Activas</td></tr>";
-		echo "<tr><td>Matricula</td><td>Marca</td><td>Modelo</td><td>Usuario</td><td>Dias Reserva</td><td>Borrar Reserva</td></tr>";	
+		echo "<tr><td>Numero</td><td>Matricula</td><td>Marca</td><td>Modelo</td><td>Usuario</td><td>Dias Reserva</td><td>Borrar Reserva</td></tr>";	
 
 		$sql3 = mysql_query("SELECT * FROM reservas_activas");
 		$filas = mysql_num_rows($sql3);
@@ -162,6 +163,7 @@ if ($_SESSION['nivelusuario'] >= 4)
 			$diasreservado = $today - $fechaentrada;
 			
 			echo "<tr>";
+			echo "<td>".$vehiculo."</td>";
 			echo "<td>".$arrayvehiculo['matricula']."</td>";
 			echo "<td>".$arrayvehiculo['marca']."</td>";
 			echo "<td>".$arrayvehiculo['modelo']."</td>";
@@ -169,8 +171,9 @@ if ($_SESSION['nivelusuario'] >= 4)
 			echo "<td>".$diasreservado."</td>";
 			echo "<td>";
 			echo "<form method='post' action='?'>";
-			echo "<input type=hidden name=vehiculo value='$vehiculo'>";
+			echo "<input type=hidden name='vehiculo' value='$vehiculo'>";
 			echo "<input type=submit name='borrareservasubmit' value='Borrar'>";
+			echo "</form>";
 			echo "</td>"; 			
 			echo "</tr>";
 			
