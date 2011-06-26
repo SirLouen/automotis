@@ -27,9 +27,12 @@
 		$nombre_archivo = $_FILES['userfile']['name']; 
 		$tipo_archivo = $_FILES['userfile']['type']; 
 		$tamano_archivo = $_FILES['userfile']['size']; 
+		$matricula = $_POST['matricula'];
+		$identificador = date("YnjHis");
 		
 		$upload_dir="tasaciones/";
-		$img_path = $upload_dir.date("Y-n-j").'_'.$nombre_archivo;
+		$nombre_fichero = $identificador.'_'.$matricula.".pdf";
+		$img_path = $upload_dir.$nombre_fichero;
 	 
 		if (!((strpos($tipo_archivo, "pdf") && ($tamano_archivo < 5000000)))) 
 		{ 
@@ -59,8 +62,9 @@
 	
 		<center>
 		<form action="ficherotasacion.php" method="post" enctype="multipart/form-data"> 
-	   	 <b>Enviar un nuevo archivo: </b> 
+	   	 	Subir Archivo PDF de Tasacion: 
 	   	 <br> 
+	   	 Matricula: <input type="text" size="8" maxlength="8" name="matricula" value="" /><br>
 	   	 <input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
 	   	 <input name="userfile" type="file"> 
 	   	 <br> 

@@ -28,7 +28,7 @@
 	<td colspan="2" align="center"> <? echo ("$lang_index_tasacion"); ?> </td>
 	</tr>
 	<tr>
-	<td>Matricula:</td><td><input type='text' id='matricula' name='matricula' size=30></td>	
+	<td>Matricula:</td><td><input size='8' maxlength='8' type='text' id='matricula' name='matricula' size=30></td>	
 	</tr>
 	<tr>
 		<td colspan="2" align="center"><input type=submit name='tasacionsubmit' value="Buscar"></td> 

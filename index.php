@@ -56,6 +56,8 @@ else
 			
 			if ($_SESSION['nivelusuario'] >= 4)
 			{
+				echo("<center><a href='listavaloraciones.php'>Ultimas Peritaciones</a></center>");
+				echo "<hr>";
 				include("consultatasacion.php");
 				echo "<hr>";
 			}
