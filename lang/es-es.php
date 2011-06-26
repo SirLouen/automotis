@@ -71,7 +71,7 @@
  $lang_file_garantia = "Garantia";
  $lang_file_comision = "Numero Expendiente";
  $lang_file_subasta = "Crear Subasta";
- $lang_file_diassubasta = "Dias Limite";
+ $lang_file_diassubasta = "Fecha Limite";
  $lang_file_borrarsubasta = "Borrar Subasta";
  
  // CARGADOR.PHP

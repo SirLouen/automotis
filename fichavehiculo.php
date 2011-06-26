@@ -249,12 +249,11 @@
  elseif (isset ($_POST['subastasubmit']))
  {
  	$vehiculo = $_POST['idvehiculo'];
- 	$diaslimite = $_POST['diaslimite'];
- 	$diaactual = date("d");
- 	$diafinal = $diaslimite + $diaactual; 
- 	$fechalimite = date("Y-m");
+ 	$dialimite = $_POST['dialimite'];
+ 	$meslimite = $_POST['meslimite'];
+ 	$anolimite = $_POST['anolimite'];
  	$horafinal = date("H:i:s");
- 	$fechalimite = $fechalimite."-".$diafinal." ".$horafinal;
+ 	$fechalimite = $anolimite."-".$meslimite."-".$dialimite." ".$horafinal;
  	
  	$activa = "1";
  	
@@ -498,7 +497,9 @@
 						echo "<td>";
 						echo "<form method='post' action='fichavehiculo.php'>
 							  <input type='hidden' name='idvehiculo' value='".$id."'>
-							  <input type='text' size=2 maxlength='2' name='diaslimite' value='3'>
+							  <input type='text' size=2 maxlength='2' name='dialimite'>
+							  <input type='text' size=4 maxlength='4' name='meslimite'>
+							  <input type='text' size=4 maxlength='4' name='anolimite'>
 							  <input type=submit name='subastasubmit' value='Crear'>";
 						echo "</td>";
 						echo "</tr>";
