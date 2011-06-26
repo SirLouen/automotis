@@ -48,6 +48,12 @@ else
 			echo ("$lang_index_welcome<br><br>");
 			echo "<hr>";
 			
+			if ($_SESSION['nivelusuario'] >= 3)
+			{
+				include("ficherotasacion.php");
+				echo "<hr>";
+			}
+			
 			if ($_SESSION['nivelusuario'] >= 4)
 			{
 				include("consultatasacion.php");
