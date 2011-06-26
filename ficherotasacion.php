@@ -28,6 +28,7 @@
 		$tipo_archivo = $_FILES['userfile']['type']; 
 		$tamano_archivo = $_FILES['userfile']['size']; 
 		$matricula = $_POST['matricula'];
+		$usuario = $_SESSION['userid'];
 		$identificador = date("YnjHis");
 		
 		$upload_dir="tasaciones/";
@@ -43,8 +44,18 @@
 		else
 		{ 
 			if(copy( $_FILES['userfile']['tmp_name'], $img_path ) )
-			{
-	        	echo "El archivo ha sido cargado correctamente."; 
+			{	        	
+	        	$sql2 = "INSERT INTO valoraciones (matricula, usuario, fechacreacion, nombrefichero)
+ 				VALUES ('$matricula', '$usuario', now(), '$nombre_fichero')";
+ 				if (!(mysql_query($sql2,$conexion)))
+				{
+					die('Error: '.mysql_error());
+				}
+				else
+				{
+					echo "El archivo ha sido cargado correctamente."; 
+				}		
+	        	
 	   		}
 	   		else
 	   		{ 

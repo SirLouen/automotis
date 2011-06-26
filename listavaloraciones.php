@@ -19,23 +19,27 @@ $maxvaloraciones = 10;
 if ($_SESSION['nivelusuario'] >= 4 )
 {
  
- 	$sql = mysql_query("SELECT * FROM ficheros_valoraciones ORDER BY id DESC ");
+ 	$sql = mysql_query("SELECT * FROM valoraciones ORDER BY id DESC ");
  	
  	$lineas = mysql_num_rows($sql);
  	if ($lineas)
  	{
- 		echo "<table>";
+ 		echo "<table border='1'>";
  		echo "<tr><th colspan='4'>Lista de Valoraciones</th><tr>";
  		echo "<tr><td>Matricula</td><td>Usuario</td><td>Creacion</td><td>Enlace</td>";
  		for($i=0;$i<$lineas && $i<$maxvaloraciones;$i++)
  		{
  			$arrayval = mysql_fetch_array($sql);
+ 			$usuario = $arrayval['usuario'];
+ 			$sql2 = mysql_query("SELECT nombre FROM usuarios WHERE userid = '$usuario'");
+ 			$arrayusuarios = mysql_fetch_array($sql2);
+ 			
  			
  			echo "<tr>";
  			echo "<td>".$arrayval['matricula']."</td>";
- 			echo "<td>".$arrayval['usuario']."</td>";
+ 			echo "<td>".$arrayusuarios['nombre']."</td>";
  			echo "<td>".$arrayval['fechacreacion']."</td>";
- 			echo "<td><a href='tasaciones/".$arrayval['nombrefichero'].">Descargar Fichero</a></td>";
+ 			echo "<td><a href='tasaciones/".$arrayval['nombrefichero']."'>Descargar Fichero</a></td>";
  			echo "</tr>";
  		}
  		echo "</table>";
