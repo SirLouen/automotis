@@ -13,7 +13,7 @@
  
  session_start();
  
- if ($_SESSION['nivelusuario'] >= 3)
+ if ($_SESSION['nivelusuario'] >= 4)
  {
  
 ?>

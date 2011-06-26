@@ -10,7 +10,7 @@
  */
 
  
- if ($_SESSION['nivelusuario'] >= 4)
+ if ($_SESSION['nivelusuario'] >= 5)
  {
  	
  $idsubasta = $_GET['idsubasta'];

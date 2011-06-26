@@ -48,13 +48,13 @@ else
 			echo ("$lang_index_welcome<br><br>");
 			echo "<hr>";
 			
-			if ($_SESSION['nivelusuario'] >= 3)
+			if ($_SESSION['nivelusuario'] >= 4)
 			{
 				include("consultatasacion.php");
 				echo "<hr>";
 			}
 			
-			if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
+			if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
 			{
 				echo("<center><a href='subastas.php'>Acceso a Subastas</a></center>");
 				echo "<hr>";
@@ -65,7 +65,7 @@ else
 			include("buscador.php");
 			echo "<hr>";
 	
-			if($_SESSION['nivelusuario'] >= 4)
+			if($_SESSION['nivelusuario'] >= 5)
 			{
 				echo("<center>$lang_index_admin_menu:<br>
 					<a href='administracion.php'>Administracion</a>

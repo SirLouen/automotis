@@ -14,7 +14,7 @@ include("include/gen_functions.php");
 include("lang/$lang.php");
 session_start();
 
-if ($_SESSION['nivelusuario'] >= 4)
+if ($_SESSION['nivelusuario'] >= 5)
 {
 	
 	if (isset ($_POST['listatasacionsubmit']))

@@ -484,7 +484,7 @@
 				$rowvehiculo = mysql_fetch_row($sql);
 				$idsubasta = $rowvehiculo[0];
 				
-				if ($_SESSION['nivelusuario'] >= '5' && $categoria == "COMPRAVENTA")
+				if ($_SESSION['nivelusuario'] >= '6' && $categoria == "COMPRAVENTA")
 				{
 					if (!$idsubasta)
 					{

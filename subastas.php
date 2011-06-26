@@ -14,7 +14,7 @@ include("include/gen_functions.php");
 include("lang/$lang.php");
 session_start();
 
-if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
+if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
 {
 	$usuario = $_SESSION['userid'];
 	$sql = mysql_query("SELECT * FROM subastas WHERE activa = '1'");
@@ -46,6 +46,9 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
 		
 		$objfechahoy = new DateTime(date("Y-m-d H:i:s"));
 		
+		 // Extensiones validas
+	 	$extensions = array('jpg','jpeg','gif','png','bmp','JPG');
+
 		for($i=0;$i<$lineas;$i++)
 		{
 		
@@ -60,6 +63,28 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
 			$sql2 = mysql_query("SELECT * FROM vehiculos WHERE id = '$idvehiculo'");
 			$arrayvehiculo = mysql_fetch_array($sql2);
 			$matricula = $arrayvehiculo['matricula'];
+			
+			// PARA CARGAR IMAGENES ALTERNATIVAS
+			$folder_image_name = "/automotis/imagenes/$matricula/";
+		 $images_folder_path = $_SERVER['DOCUMENT_ROOT'].$folder_image_name;
+		 $url_to_folder = 'http://'.$_SERVER["SERVER_NAME"].$folder_image_name;
+		
+		 $images = array();
+		
+		 // Introducir las imagenes en un array
+		 if ($handle = opendir($images_folder_path)) {
+		    while (false !== ($file = readdir($handle))) {
+		        if ($file != "." && $file != "..") {
+		
+		          $ext = strtolower(substr(strrchr($file, "."), 1));
+		                
+		          if(in_array($ext, $extensions)){
+		            $images[] = $file;
+		          }
+		        }
+		    }
+			closedir($handle);
+		 }
 			
 			if ($objfechalimite > $objfechahoy)
 			{
