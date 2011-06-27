@@ -19,6 +19,7 @@
 
 	<input type="hidden" name="matricula" value="<?php echo "$matricula"; ?>">
 	<input type='hidden' name='tipoinsercion' value='<?php echo $tipoinsercion; ?>'>
+	<input type='hidden' name='idvaloracion' value='<?php echo $idvaloracion; ?>'>
 	
 <table border="0" align ="center">
 	

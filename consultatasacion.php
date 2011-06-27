@@ -42,6 +42,8 @@
 if (isset ($_POST['tasacionsubmit'])) 
 {
 
+	$idvaloracion = $_POST['idvaloracion'];
+	
 	$matricula = $_POST['matricula'];
 	$userid = $_SESSION['userid'];
 	$fechadefecto = '0000-00-00 00:00:00';
@@ -80,6 +82,24 @@ if (isset ($_POST['tasacionsubmit']))
 			echo "<tr><td>Matricula</td>";
 			echo "<td>".$matricula."</td>";
 			echo "</tr>";
+			
+			echo "<tr><td>Valoracion</td>";
+			for($i=0; $i<$filas; $i++) 
+			{
+				$idval = $array2d[$i]['valoracion'];
+				$sql3 = mysql_query("SELECT * FROM valoraciones WHERE id = '$idval'");
+				$arrayval = mysql_fetch_array($sql3);
+				if (mysql_num_rows($sql3))
+				{
+					echo "<td><a target='_blank' href='tasaciones/".$arrayval['nombrefichero']."'>Descargar Fichero</a></td>";
+				}
+				else
+				{
+					echo "<td>Sin Valoracion</td>";
+				}
+			}
+			echo "</tr>";
+			
 			
 			echo "<tr><td>Marca</td>";
 			for($i=0; $i<$filas; $i++) {
@@ -270,6 +290,7 @@ if (isset ($_POST['tasacionsubmit']))
 				{
 					echo "<td><form method='post' action='consultatasacion.php'><input type='hidden' name='matricula' value=".$matricula.">";
 					echo "<input type='hidden' name='idtasacion' value=".$array2d[$i]['id'].">";	
+					echo "<input type='hidden' name='idvaloracion' value=".$idvaloracion.">";	
 					echo "<input type=submit name='tasacionmodificar' value='Modificar'></td>";
 					$puedemodificar=true;
 				} 
@@ -321,6 +342,7 @@ elseif (isset ($_POST['intasasubmit']))
 	$usuariotasacion = $_SESSION['userid'];
 	$pvpestimado = $_POST['pvpestimado'];
 	
+	
 	$nombrecliente = $_POST['nombrecliente'];
 	
 	$tipoinsercion = $_POST['tipoinsercion'];
@@ -356,6 +378,8 @@ elseif (isset ($_POST['intasasubmit']))
 	if ( $_POST['pm'] == "1" ){ $pm = 1; } else { $pm = 0; }
 	
 	$idtasacion = $_POST['idtasacion'];
+	$idvaloracion = $_POST['idvaloracion'];
+	
 	$esfuerzoactual = $_POST['esfuerzoactual'];
 	
 	// Inicializamos a 0 los indices para insertar en la tabla de reacondicionamientos
@@ -397,7 +421,7 @@ elseif (isset ($_POST['intasasubmit']))
 				abs = '$abs', esp = '$esp', ct = $ct, fourwd = '$fourwd', ac = '$ac', ap = '$ap', al = '$al',
 				ala = '$ala', an = '$an', inm = '$inm', cc = '$cc', aa = '$aa', cl = '$cl', ts = '$ts', da = '$da',	ee = '$ee',
 				ae = '$ae', cu = '$cu', aca = '$aca', cv = '$cv', fx = '$fx', apk = '$apk', rcd = '$rcd', gps = '$gps', ba = '$ba',
-				br = '$br', ll = '$ll', tu = '$tu', pm = '$pm'
+				br = '$br', ll = '$ll', tu = '$tu', pm = '$pm', valoracion = '$idvaloracion'
 		    	WHERE (id = '$idtasacion')";	
 		    	if (!(mysql_query($sql,$conexion)))
 		    	{
@@ -414,11 +438,11 @@ elseif (isset ($_POST['intasasubmit']))
 	{	
 		$sql = "INSERT INTO tasaciones (marca, modelo, matricula, fechamatric, kilometros, color, combustible,
 				potencia, cilindrada, carroceria, plazas, usoanterior, valormercado, esfuerzocomercial1, usuario, fecha1,
-				observaciones, pvpestimado, nombrecliente, abs, esp, ct, fourwd, ac, ap, al, ala, an, inm, cc, aa, cl, ts, da,
+				observaciones, pvpestimado, nombrecliente, valoracion, abs, esp, ct, fourwd, ac, ap, al, ala, an, inm, cc, aa, cl, ts, da,
 				ee, ae, cu, aca, cv, fx, apk, rcd, gps, ba, br, ll, tu, pm)
 	 			VALUES ('$marca', '$modelo', '$matricula', '$fechamatric', '$kilometros', '$color',
 	 			'$combustible',	'$potencia', '$cilindrada', '$carroceria', '$plazas', '$usoanterior', '$valormercado',
-	 			'$esfuerzocomercial', '$usuariotasacion', now(), '$observaciones', '$pvpestimado', '$nombrecliente', '$abs',
+	 			'$esfuerzocomercial', '$usuariotasacion', now(), '$observaciones', '$pvpestimado', '$nombrecliente', '$idvaloracion', '$abs',
 	 			'$esp', '$ct', '$fourwd', '$ac', '$ap', '$al', '$ala', '$an', $inm, '$cc', '$aa', '$cl', '$ts', '$da', '$ee', '$ae',
 	 			'$cu', '$aca', '$cv', '$fx', '$apk', '$rcd', '$gps', '$ba', '$br', '$ll', '$tu', '$pm')";
 	 	

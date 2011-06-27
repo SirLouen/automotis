@@ -10,10 +10,12 @@
  */
  	
 	$matricula=$_POST['matricula'];
+	$idvaloracion = $_POST['idvaloracion'];
 	$userid=$_SESSION['userid'];
 	$idtasacion=$_POST['idtasacion'];
 	$ofertadefecto = 0 ;
 	$maxreacondicionamientos = 10;
+	
 	
 	$sql = mysql_query("SELECT * FROM tasaciones WHERE id = '$idtasacion'");
 		
@@ -52,6 +54,7 @@
 <input type="hidden" name="matricula" value="<?php echo "$matricula"; ?>">
 <input type='hidden' name='tipoinsercion' value='<?php echo $tipoinsercion; ?>'>
 <input type='hidden' name='idtasacion' value='<?php echo $idtasacion; ?>'>
+<input type='hidden' name='idvaloracion' value='<?php echo $idvaloracion; ?>'>
 <input type='hidden' name='esfuerzoactual' value='<?php echo $esfuerzoactual; ?>'>
 
 <table border="0">

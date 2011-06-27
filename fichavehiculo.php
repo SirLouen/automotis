@@ -447,6 +447,7 @@
 								 	<input type='hidden' name='idoferta' value='".$arrayofertas['id']."'>
 								 	<input type='hidden' name='idvehiculo' value='".$id."'>
 								 	<input type=submit name='reservasubmit' value='Reserva'>";
+								 	echo "</form>";
 									echo "</td>";
 								} 
 							}
