@@ -17,6 +17,8 @@ $password="trial";
 $pass="trial";
 $adminemail = "mcamargo@peugeotcadiz.com";
 $adminname = "Manuel Camargo";
+$correomensatek = "mcamargo@peugeotcadiz.com";
+$passwordmensatek = "trial";
 
 include("lang/$lang.php");
 

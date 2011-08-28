@@ -12,6 +12,7 @@
 include("config.php");
 include("include/gen_functions.php");
 include("lang/$lang.php");
+require_once("include/mensatek.inc");
 session_start();
 
 if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
@@ -28,6 +29,8 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
 		$subasta = $_POST['idsubasta'];
 		$puja = $_POST['puja'];
 	 	$pujamin = $_POST['pujamin'];
+	 	$usuariosubasta = $_POST['usuariosubasta'];
+	 	 	
 	 	if ($puja > $pujamin)
 	 	{
 	 	
@@ -41,6 +44,59 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
 		 	else
 		 	{
 		 		echo "Puja Enviada!<br><br>";
+		 		
+		 		$sql3 = mysql_query("SELECT * FROM usuarios WHERE userid = $usuariosubasta");
+		 		$arrayusuario = mysql_fetch_array($sql3);
+		 		$sql4 = mysql_query("SELECT * FROM subastas WHERE id = $subasta");
+		 		$arraysubasta = mysql_fetch_array($sql4);
+		 		$vehiculo = $arraysubasta['vehiculo'];
+		 		$sql5 = mysql_query("SELECT * FROM vehiculos WHERE id = $vehiculo");
+		 		$arrayvehiculo = mysql_fetch_array($sql5);
+		 		
+		 		$marca = $arrayvehiculo['marca'];
+		 		$modelo = $arrayvehiculo['modelo'];
+		 		
+		 		$telefono = $arrayusuario['telefono'];
+		 		$mensajesms = "Subastas Peugeot. Has sido sobrepujado $puja euros en el $marca que habias pujado. Vuelve a pujar cuanto antes!";
+		 		
+		 		if($telefono)
+		 		{
+			 		// Crear instancia Clase
+					$Mensatek=new cMensatek($correomensatek,$passwordmensatek);
+					$variables=array(
+					"Remitente"=>"638000836",  //Remitente que aparece, puede ser número de móvil o texto (hasta 11 caracteres)
+					"Destinatarios"=>$telefono, // Destinatarios del mensaje, si es más de 1 sepárelos por punto y coma
+					"Mensaje"=>$mensajesms, //Mensaje, si se envían más de 160 caracteres se enviará en varios mensajes
+					"Flash"=>0, // Formato Flash 
+					"Report"=>1,  //Report de entrega al correo electrónico por defecto
+					"Descuento"=>0 // Si utiliza descuento o no
+					);
+			 		
+					$res=$Mensatek->enviar($variables);
+		
+		 		}
+		 		$email = $arrayusuario['email'];
+		 		
+		 		if($email)
+		 		{
+					$cabeceras  = "MIME-Version: 1.0\r\n";
+					$cabeceras .= "Content-type: text/html; charset=UTF-8\r\n";
+					$cabeceras .= "To: ".$arrayusuario['nombre']." <$email>\r\n";
+					$cabeceras .= "From: Peugeot Ibericar <$adminemail>\r\n";
+		
+					$asunto = "Subastas Peugeot Ibericar: Acabas de ser Sobre Pujado";
+		
+					$mensaje = "Acabas de ser sobrepujado en el siguiente vehiculo:<br>
+							   Marca: $marca<br>
+							   Modelo: $modelo<br>
+							   Fecha Matriculacion: ".fecha_normal($arrayvehiculo['fechamatric'])."<br>
+							   Kilometros: ".$arrayvehiculo['kilometros']."<br>
+							   El Importe de la sobrepuja es de $puja euros.<br>
+							   Si crees que puedes pagar mas por el coche, entra en www.ibericarcadiz.com<br>
+							   Para introducir tu nueva puja al sistema";
+							   
+				    mail ($email,$asunto,$mensaje,$cabeceras);
+		 		}
 		 	
 		 	} 	
 	 	}
@@ -50,7 +106,7 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
 	 		echo "ERROR: Has Pujado por debajo de la Puja Minima: ".$pujamin." euros<br>";
 	 		echo "<table><tr>";
 	 		echo "<td>Importe Nueva Puja:</td>";
-	 		echo "<td><form method='post' action='subastas.php'>
+	 		echo "<td><form method='post' action='?'>
 				  <input type='hidden' name='idsubasta' value='".$subasta."'>
 				  <input type='text' name='puja' value='$puja'>
 				  <input type='hidden' name='pujamin' value='".$pujamin."'>
@@ -161,16 +217,22 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
 						<td style="vertical-align: top; height: 40px;"><?php echo $lang_subasta_plazas.': '.$arrayvehiculo['plazas']; ?><br></td>
 					</tr>
 					<tr>
-						<td style="vertical-align: middle; height: 40px;">
+						<td colspan="2" style="vertical-align: middle; height: 40px;">
 						<?php
-							$sql3 = mysql_query("SELECT * FROM subastas_pujas WHERE subasta = '$idsubasta' ORDER BY FECHAINSERCION DESC");
+							$usuariosubasta = 0;
+							$primerapuja = 0;
+							$sql3 = mysql_query("SELECT * FROM subastas_pujas WHERE subasta = '$idsubasta' ORDER BY fechainsercion DESC");
 							if (mysql_num_rows($sql3))
 							{
-								$arraysubasta = $mysql_fetch_array($sql3);
+								$arraysubasta = mysql_fetch_array($sql3);
 								$puja = $arraysubasta['puja'];
+								$usuariosubasta = $arraysubasta['usuario'];
 							}
 							else
+							{
 								$puja = $pvd;
+								$primerapuja = 1;
+							}
 							echo "Maxima Puja Actual: ".$puja;
 						?>
 						
@@ -182,16 +244,27 @@ if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
 						
 						<?php
 						// $sql2 = mysql_query("SELECT * FROM subastas_pujas WHERE usuario = '$usuario' AND subasta = '$idsubasta'");
-						if($arraysubasta['usuario'] != $usuario)
+						if($usuariosubasta != $usuario)
 						{
 							$pvdpuja = $puja + 50;
 							echo "
-						 	<form method='post' action='subastas.php'>
+						 	<form method='post' action='?'>
 						 	<input type='hidden' name='idsubasta' value='".$idsubasta."'>
-						 	Importe: <input type='text' name='puja' value='$pvdpuja'>
-						 	<input type='hidden' name='pujamin' value='".$puja."'>
-						 	<input type=submit name='subastasubmit' value='Lanzar Puja'>
-						 	</form>
+						 	Importe: <input type='text' name='puja' value='$pvdpuja'>";
+						 	
+						 	if ($primerapuja)
+						 	{
+						 		$pujamin = $puja-300;
+						 		echo "<input type='hidden' name='pujamin' value='".$pujamin."'>";
+						 	}
+						 	else
+						 	{
+						 		$pujamin = $puja;
+						 	}
+						 	echo "<input type='hidden' name='pujamin' value='".$pujamin."'>
+						 		  <input type='hidden' name='usuariosubasta' value='".$usuariosubasta."'>
+						 		  <input type=submit name='subastasubmit' value='Lanzar Puja'>
+						 		  </form>
 						 	";
 						}
 						else
