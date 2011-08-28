@@ -46,14 +46,13 @@
       <option value="seminuevo">Vehiculo Seminuevo</option>
       </select></td>
     </tr>
-    <? if ($_SESSION['nivelusuario'] >= 4)
+    <? if ($_SESSION['nivelusuario'] >= 5)
        {
        	echo "<tr>
     	<td>".$lang_find_categoria."</td>
        	<td><select name='categoria'>
-      	<option selected value='TODOS'>Todos</option>
       	<option value='COMPRAVENTA'>Compraventa</option>
-      	<option value='PARTICULAR'>Particular</option>
+      	<option selected value='PARTICULAR'>Particular</option>
       	</select></td>
     	<tr>";
        }

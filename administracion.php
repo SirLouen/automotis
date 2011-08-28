@@ -137,8 +137,8 @@ if ($_SESSION['nivelusuario'] >= 5)
 		echo "<hr>";
 		
 		echo "<table border='1' align='center'>";
-		echo "<tr><td colspan ='6' align='center'>Reservas Activas</td></tr>";
-		echo "<tr><td>Numero</td><td>Matricula</td><td>Marca</td><td>Modelo</td><td>Usuario</td><td>Dias Reserva</td><td>Borrar Reserva</td></tr>";	
+		echo "<tr><td colspan ='8' align='center'>Reservas Activas</td></tr>";
+		echo "<tr><td>Numero</td><td>Matricula</td><td>Marca</td><td>Modelo</td><td>Usuario</td><td>Dias Reserva</td><td>Importe</td><td>Borrar Reserva</td></tr>";	
 
 		$sql3 = mysql_query("SELECT * FROM reservas_activas");
 		$filas = mysql_num_rows($sql3);
@@ -169,6 +169,7 @@ if ($_SESSION['nivelusuario'] >= 5)
 			echo "<td>".$arrayvehiculo['modelo']."</td>";
 			echo "<td>".$arrayusuario['nombre']."</td>";
 			echo "<td>".$diasreservado."</td>";
+			echo "<td>".$arrayreservas['importe']."</td>";
 			echo "<td>";
 			echo "<form method='post' action='?'>";
 			echo "<input type=hidden name='vehiculo' value='$vehiculo'>";
