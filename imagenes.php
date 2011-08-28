@@ -49,7 +49,7 @@ if(!empty($images))
 		$i=0;
 	else
 		$i++;
-	echo ("<a href='imagenes.php?i=".$i."&matricula=".$matricula."'><img src=".$src." align='absmiddle'></a>");
+	echo ("<a href='imagenes.php?i=".$i."&matricula=".$matricula."'><img height=70% width= 70% src=".$src." align='absmiddle'></a>");
 }
 else
 	echo 'Atencion! Ha habido un error, o no hay imagenes para mostrar';
