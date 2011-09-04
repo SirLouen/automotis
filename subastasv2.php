@@ -15,7 +15,7 @@ include("lang/$lang.php");
 require_once("include/mensatek.inc");
 session_start();
 
-if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
+if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
 {
 	$usuario = $_SESSION['userid'];
 	$sql = mysql_query("SELECT * FROM subastas WHERE activa = '1'");

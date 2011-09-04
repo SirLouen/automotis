@@ -62,9 +62,9 @@ else
 				echo "<hr>";
 			}
 			
-			if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 5 )
+			if ($_SESSION['concesionario'] == 10 || $_SESSION['nivelusuario'] >= 4 )
 			{
-				echo("<center><a href='subastas.php'>Acceso a Subastas</a></center>");
+				echo("<center><a href='subastasv2.php'>Acceso a Subastas</a></center>");
 				echo "<hr>";
 			}
 			
