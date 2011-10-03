@@ -19,7 +19,7 @@
  
  echo "<table border='1' align ='center'>
  		<tr><td colspan ='4' align='center'>Lista de Pujas Subasta</td></tr>
-		<tr><td>Id Puja</td><td>Fecha Insercion</td><td>Nombre Pujador</td><td>Importe</td></tr>";
+		<tr><td>Id Puja</td><td>Fecha Insercion</td><td>Nombre Pujador</td><td>Importe</td><td>Telefono</td></tr>";
  		
  for($i=0;$i<$lineas;$i++)
  {
@@ -33,6 +33,7 @@
 	$arrayusuario = mysql_fetch_array($sql2);
 	echo "<td>".$arrayusuario['nombre']."</td>";
 	echo "<td>".$arraypujas['puja']."</td>";
+	echo "<td>".$arrayusuario['telefono']."</td>";
 	echo "</tr>";
  		
  }

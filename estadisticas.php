@@ -34,8 +34,8 @@ if (isset ($_POST['ofertassubmit']))
 	
 	echo "<table border='2'>";
 	echo "<tr align='center'><td colspan = '10'> $lang_stats_listofertas $lang_stats_total: $lineas</td></tr>";
-	echo "<tr><td>ID Of</td><td>Nombre</td><td>Apellidos</td><td>Matricula</td><td>PVP</td><td>Tasacion</td><td>Desc Real</td>
-		 <td>Precio Oferta</td><td>Usuario</td><td>Fecha Creacion</td></tr>";
+	echo "<tr><td>ID Of</td><td>Usuario</td><td>Fecha Creacion</td><td>Nombre</td><td>Apellidos</td><td>Telefono</td><td>Email</td>
+		 <td>Poblacion</td><td>CP</td><td>Matricula</td><td>PVP</td><td>Tasacion</td><td>Desc Real</td><td>Precio Oferta</td></tr>";
 	
 	
 	for($i=0;$i<$lineas;$i++)
@@ -55,6 +55,10 @@ if (isset ($_POST['ofertassubmit']))
 		$sql5 = mysql_query("SELECT * FROM clientes WHERE id = '$cliente'");
 		$arrayclientes = mysql_fetch_array($sql5);
 		
+		$cp = $arrayclientes['cp'];
+		$sql6 = mysql_query("SELECT * FROM codigospostales WHERE cp = '$cp'");
+		$arraycps = mysql_fetch_array($sql6);
+				
 		
 		if ($arraytasacion['esfuerzocomercial3'])
 			$esfuerzocomercial = $arraytasacion['esfuerzocomercial3'];
@@ -75,15 +79,19 @@ if (isset ($_POST['ofertassubmit']))
 		
 		echo "<tr>";
 		echo "<td>".$arrayofertas['id']."</td>";
+		echo "<td>".$arrayusuarios['nombre']."</td>";
+		echo "<td>".$fechacreacion."</td>";
 		echo "<td>".$arrayclientes['nombre']."</td>";
 		echo "<td>".$arrayclientes['apellidos']."</td>";
+		echo "<td>".$arrayclientes['telefono']."</td>";
+		echo "<td>".$arrayclientes['email']."</td>";
+		echo "<td>".$arraycps['poblacion']."</td>";
+		echo "<td>".$cp."</td>";
 		echo "<td>".$arrayvehiculos['matricula']."</td>";
 		echo "<td>".$arrayvehiculos['pvp']."</td>";
 		echo "<td>".$valortasacion."</td>";
 		echo "<td>".$descuentoreal."</td>";
 		echo "<td>".$preciofinal."</td>";
-		echo "<td>".$arrayusuarios['nombre']."</td>";
-		echo "<td>".$fechacreacion."</td>";
 		echo "</tr>";
 	}
 	
