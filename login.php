@@ -42,6 +42,8 @@ if (isset ($_POST['submit']))
 			$_SESSION['userid'] = $userid;
 			session_register('nombre');
 			$_SESSION['nombre'] = $nombre;
+			session_register('nombreusuario');
+			$_SESSION['nombreusuario'] = $usuario;
 			session_register('nivelusuario');
 			$_SESSION['nivelusuario'] = $nivelusuario;
 			session_register('concesionario');

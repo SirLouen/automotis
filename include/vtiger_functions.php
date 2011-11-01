@@ -17,19 +17,17 @@ session_start();
 $url = 'http://automotis.com/crm';
 $client = new Vtiger_WSClient($url);
 
-$vtigeruser = $_SESSION['userid'];
-
 $sql = mysql_query("SELECT vtigerpassword FROM usuarios WHERE userid = '7'");
 $arrayusuario = mysql_fetch_array($sql);
 
 $vtigerdefaultpass = $arrayusuario['vtigerpassword'];
 
-$vtigeruser = $_SESSION['nombre'];
+$vtigeruser = $_SESSION['nombreusuario'];
 $vtigerpassword = $_SESSION['vtigerpassword'];
 
 if($vtigerdefaultpass == $vtigerpassword)
 	$vtigeruser = 'mcamargo';
-
+	
 $login = $client->doLogin($vtigeruser, $vtigerpassword);
 if(!$login)
 	echo 'Acceso a Vtiger Fallo';
