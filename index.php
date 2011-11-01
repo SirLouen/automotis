@@ -38,6 +38,8 @@ else
 	} 
 	else 
 	{
+		include_once("include/vtiger_functions.php");
+		
 		if ($_GET['matricula'])
 		{
 			include("fichavehiculo.php");

@@ -12,6 +12,7 @@
  include("config.php");
  include("lang/$lang.php");
  include_once("include/gen_functions.php");
+ include_once("include/vtiger_functions.php");
  
  session_start();
  
