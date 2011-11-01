@@ -34,7 +34,7 @@ if (isset ($_POST['ofertassubmit']))
 	
 	echo "<table border='2'>";
 	echo "<tr align='center'><td colspan = '10'> $lang_stats_listofertas $lang_stats_total: $lineas</td></tr>";
-	echo "<tr><td>ID Of</td><td>Usuario</td><td>Fecha Creacion</td><td>Nombre</td><td>Apellidos</td><td>Telefono</td><td>Email</td>
+	echo "<tr><td>ID Of</td><td>Usuario</td><td>Fecha Creacion</td><td>Nombre</td><td>Apellidos</td><td>Movil</td><td>Fijo</td><td>Email</td>
 		 <td>Poblacion</td><td>CP</td><td>Matricula</td><td>PVP</td><td>Tasacion</td><td>Desc Real</td><td>Precio Oferta</td></tr>";
 	
 	
@@ -83,7 +83,8 @@ if (isset ($_POST['ofertassubmit']))
 		echo "<td>".$fechacreacion."</td>";
 		echo "<td>".$arrayclientes['nombre']."</td>";
 		echo "<td>".$arrayclientes['apellidos']."</td>";
-		echo "<td>".$arrayclientes['telefono']."</td>";
+		echo "<td>".$arrayclientes['movil']."</td>";
+		echo "<td>".$arrayclientes['fijo']."</td>";
 		echo "<td>".$arrayclientes['email']."</td>";
 		echo "<td>".$arraycps['poblacion']."</td>";
 		echo "<td>".$cp."</td>";
