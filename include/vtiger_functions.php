@@ -12,6 +12,7 @@
  // Compatibilidad con VTIGER
 
 include_once('vtwsclib/Vtiger/WSClient.php');
+session_start();
 
 $url = 'http://automotis.com/crm';
 $client = new Vtiger_WSClient($url);

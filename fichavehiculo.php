@@ -112,6 +112,8 @@
 		if ($array['codigocortesia']){ $codigocortesia_cliente =  $array['codigocortesia']; $existe++; }
 		if ($array['tipo']){ $tipo_cliente =  $array['tipo']; $existe++; }
 		
+		$vtigerid = $array['vtigerid'];
+		
 		if ($existe != 8)
 		{
 		$sql2 = "UPDATE clientes
@@ -142,10 +144,42 @@
  	$importe3 = $_POST['importe3'];
  	$sobreprecio = $_POST['sobreprecio'];
  	
+ 	// Insercion de Oferta en VTIGER como Oportunidad
+ 	
+ 	$sqlveh = mysql_query("SELECT * FROM vehiculos WHERE id = $vehiculo");
+ 	$arrayveh = mysql_fetch_array($sqlveh);
+ 	$modelo = $arrayveh['modelo'];
+ 	$pvp = $arrayveh['pvp'];
+ 	
+ 	$nomusuario = $_SESSION['nombre'];
+ 	
+ 	$potentialname = $matricula." - ".$modelo." - ".$nomusuario;
+ 	$closingdate = date('Y')."-".date('m')."-".date('t'); 
+		
+	$vtigerid = '4x'.$vtigerid;
+	
+	$useridvtiger = $client->getUserId();
+		
+	$module = 'Potentials';
+	$record = $client->doCreate($module, Array('related_to'=>$vtigerid, 'potentialname' => $potentialname,
+	'amount'=>$pvp, 'closingdate'=>$closingdate, 'sales_stage' => 'Prospecting', 'leadsource' => 'Exposicion',
+	'assigned_user_id' => $useridvtiger));
+	if($record) 
+	{
+		$vtigerofertaid = $client->getRecordId($record['id']);
+	}
+	
+	$wasError= $client->lastError();
+	if($wasError) {
+		echo $wasError['code'] . ':' . $wasError['message'];
+	}
+ 	
+ 	// Insercion de Oferta en Automotis
+ 	
  	$sql = "INSERT INTO ofertas (vehiculo, cliente, tasacion, usuario, descuento, fechacreacion, entrada1, meses1,
-				importe1, entrada2, meses2, importe2, entrada3, meses3, importe3, sobreprecio)
+				importe1, entrada2, meses2, importe2, entrada3, meses3, importe3, sobreprecio, vtigerid)
 	 			VALUES ('$vehiculo', '$cliente', '$tasacion', '$usuariooferta', '$descuento', now(), '$entrada1', '$meses1',
-				'$importe1', '$entrada2', '$meses2', '$importe2', '$entrada3', '$meses3', '$importe3', '$sobreprecio')";
+				'$importe1', '$entrada2', '$meses2', '$importe2', '$entrada3', '$meses3', '$importe3', '$sobreprecio','$vtigerofertaid')";
 	 	
 	 	if (!(mysql_query($sql,$conexion)))
 		{

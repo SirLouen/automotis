@@ -162,6 +162,10 @@ class Vtiger_WSClient {
 		$this->_userid    = $resultdata[result][userId];
 		return true;
 	}
+	
+	function getUserId() {
+		return $this->_userid;
+	}
 
 	/**
 	 * Do Query Operation.
