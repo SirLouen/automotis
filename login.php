@@ -50,6 +50,8 @@ if (isset ($_POST['submit']))
 			$_SESSION['email'] = $email;
 			session_register('telefono');
 			$_SESSION['telefono'] = $telefono;
+			session_register('vtigerpassword');
+			$_SESSION['vtigerpassword'] = $vtigerpassword;
 		
 			mysql_query("UPDATE usuarios SET `last_login`=now() WHERE `userid`='$userid'");
 			header("Location: index.php");		

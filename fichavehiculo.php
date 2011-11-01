@@ -60,9 +60,29 @@
 	
 	if($login_check == 0)
 	{
-		$sql = "INSERT INTO clientes (nombre, apellidos, cp, movil, fijo, email, usuario, fechacreacion, codigocortesia, tipo)
+		
+		// Insercion de usuario en Vtiger
+		// NOTA: De momento las Empresas se guardaran como Contactos, y no como cuentas, 
+		// porque el tratamiento general se volveria Un pelin complejo. En un futuro, pte de revisar esto.
+		
+		$sqlcp = mysql_query("SELECT * FROM codigospostales WHERE cp = $cp_cliente");
+		$arraycps = mysql_fetch_array($sqlcp);
+		$localidad_cliente = $arraycps['poblacion'];
+		
+		$module = 'Contacts';
+		$record = $client->doCreate($module, Array('firstname'=>$nombre_cliente, 'lastname' => $apellidos_cliente,
+		'mailingzip'=>$cp_cliente, 'mobile'=>$movil_cliente, 'phone' => $fijo_cliente, 'email' => $email_cliente,
+		'salutation'=>$codigocortesia_cliente, 'mailingcity' => $localidad_cliente));
+		if($record) 
+		{
+			$vtigerid = $client->getRecordId($record['id']);
+		}
+		
+		// Insercion en Automotis	
+		
+		$sql = "INSERT INTO clientes (nombre, apellidos, cp, movil, fijo, email, usuario, fechacreacion, codigocortesia, tipo, vtigerid)
  			VALUES ('$nombre_cliente', '$apellidos_cliente', '$cp_cliente', '$movil_cliente', '$fijo_cliente', 
- 					'$email_cliente', '$usuariooferta', now(), '$codigocortesia_cliente', '$tipo_cliente')";
+ 					'$email_cliente', '$usuariooferta', now(), '$codigocortesia_cliente', '$tipo_cliente', '$vtigerid')";
  		if (!(mysql_query($sql,$conexion)))
 		{
 			die('Error: '.mysql_error());
@@ -416,7 +436,7 @@
 				{
 					echo "<table border ='1'>";
 				
-						$sql = mysql_query("SELECT * FROM ofertas WHERE vehiculo = $id");
+						$sql = mysql_query("SELECT * FROM ofertas WHERE vehiculo = $id ORDER BY id DESC");
 						$filas = mysql_num_rows($sql);
 						echo "<tr>";
 						echo "<td>Oferta</td><td>Usuario</td><td>Total</td><td>Imprimir</td>";
