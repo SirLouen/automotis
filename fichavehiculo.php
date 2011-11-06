@@ -73,7 +73,7 @@
 		$module = 'Contacts';
 		$record = $client->doCreate($module, Array('firstname'=>$nombre_cliente, 'lastname' => $apellidos_cliente,
 		'mailingzip'=>$cp_cliente, 'mobile'=>$movil_cliente, 'phone' => $fijo_cliente, 'email' => $email_cliente,
-		'salutation'=>$codigocortesia_cliente, 'mailingcity' => $localidad_cliente));
+		'salutation'=>$codigocortesia_cliente, 'mailingcity' => $localidad_cliente, 'leadsource' => 'Exposicion'));
 		if($record) 
 		{
 			$vtigerid = $client->getRecordId($record['id']);
@@ -257,6 +257,9 @@
  	$idvehiculo = $_POST['idvehiculo'];
  	$idoferta = $_POST['idoferta'];
  	
+ 	
+ 	// ACTUALIZACION Automotis de Datos de Cliente con la Reserva
+ 	
 	$sql2 = "UPDATE clientes
 		    	SET nombre = '$nombre_cliente', apellidos = '$apellidos_cliente', movil = '$movil_cliente',
 		    	fijo = '$fijo_cliente',	email = '$email_cliente', cp = '$cp_cliente', fechacreacion = now(), usuario = '$usuarioreserva',
@@ -267,7 +270,24 @@
 		    	{
 		    		die('Error: '.mysql_error());
 		    	}
+		    	
+	// ACTUALIZACION de Datos de Contacto en VTIGER con los datos de Reserva
+	
+	$sqlv = mysql_query("SELECT * FROM clientes WHERE id = '$idcliente'");
+	$arraycliente = mysql_fetch_array($sqlv);
+	$vtigerusu = $arraycliente['vtigerid'];
+	
+	$codigousuario = "4x".$vtigerusu; 
+	$contact = $client->doRetrieve($codigousuario); 
+	$update_client = array('mailingstreet' => $direccion_cliente, 'birthday' => $fechanacimiento);
+	 
+	foreach($update_client as $key => $value)
+	{ 
+		$contact[$key] = $value; 
+	} 
+	$update = $client->doUpdate($contact);
 
+	// CREACION Reserva con datos de la reserva en Automotis
  	
  	$sql = "INSERT INTO reservas (oferta, cliente, vehiculo, usuario, importe, fechareserva)
 	 			VALUES ('$idoferta', '$idcliente', '$idvehiculo', '$usuarioreserva', '$importe', now())";
