@@ -46,6 +46,15 @@
       <option value="seminuevo">Vehiculo Seminuevo</option>
       </select></td>
     </tr>
+    <tr> 
+      <td><? echo $lang_find_ubicacion; ?></td>
+      <td><select name="ubicacion">
+      <option selected value="TODOS">Cualquiera</option>
+      <option value="EXP. CADIZ">Cadiz</option>
+      <option value="EXP. JEREZ">Jerez</option>
+      <option value="EXP. PUERTO">Puerto</option>
+      </select></td>
+    </tr>
     <? if ($_SESSION['nivelusuario'] >= 5)
        {
        	echo "<tr>
@@ -138,6 +147,10 @@ if (isset ($_POST['submit']))
 	if ($categoria == "TODOS")
 		$categoria = "";	
 	
+	$ubicacion = $_POST['ubicacion'];
+	
+	if ($ubicacion == "TODOS")
+		$ubicacion = "";	
 	
 	$sql = mysql_query("SELECT vehiculos.* FROM vehiculos_disponibles, vehiculos
 			WHERE (vehiculos_disponibles.matricula = vehiculos.matricula) AND
@@ -146,6 +159,7 @@ if (isset ($_POST['submit']))
 		    AND (vehiculos.kilometros >= '$kmmenor') AND (vehiculos.kilometros <= '$kmmayor')
 		    AND (vehiculos.fechamatric >= '$fechamatricmenor') AND (vehiculos.fechamatric <= '$fechamatricmayor')
 			AND (marca LIKE '%$marca%') AND (modelo LIKE '%$modelo%') AND (vehiculos.categoria LIKE '%$categoria%')
+			AND (ubicacion LIKE '%$ubicacion%')
 			ORDER BY now()-fechaentrada DESC");
 		
 	$numrows = mysql_num_rows($sql);
@@ -175,11 +189,6 @@ if (isset ($_POST['submit']))
 			$sql3 = mysql_query("SELECT subasta FROM vehiculos WHERE id = '$vehiculo'");
 			$rowvehiculos = mysql_fetch_row($sql3);
 			$subastaactiva = $rowvehiculos[0];
-			if ($numerovehiculos > 0 || $subastaactiva)
-				echo "<tr style='background-color:red;'>";
-			else
-				echo "<tr>";			
-			
 			
 			$today = juliantojd(date("n"),date("j"),date("Y"));
 			$fechaentry = $arrayvehiculos['fechaentrada'];
@@ -187,6 +196,14 @@ if (isset ($_POST['submit']))
 			$fechaentrada = juliantojd($fechadiv[1],$fechadiv[2],$fechadiv[0]);
 			$diasstock = $today - $fechaentrada;
 			$fechamatricula = fecha_normal($arrayvehiculos['fechamatric']);
+			
+			
+			if ($numerovehiculos > 0 || $subastaactiva)
+				echo "<tr style='background-color:red;'>";
+			elseif ($diasstock >= 120 && $_SESSION['nivelusuario'] == 3 )
+				echo "<tr style='background-color:green;'>";
+			else
+				echo "<tr>";			
 			
 			echo "<td style='vertical-align: top; width: 80px; height: 60px'>
 			<a href='index.php?matricula=".$arrayvehiculos['matricula']."'>

@@ -158,7 +158,7 @@
 		
 	$vtigerid = '4x'.$vtigerid;
 	
-	$useridvtiger = $client->getUserId();
+	$useridvtiger = $client->_userid;
 		
 	$module = 'Potentials';
 	$record = $client->doCreate($module, Array('related_to'=>$vtigerid, 'potentialname' => $potentialname,
@@ -169,10 +169,40 @@
 		$vtigerofertaid = $client->getRecordId($record['id']);
 	}
 	
+	$potentialid = '5x'.$vtigerofertaid;
+	
 	$wasError= $client->lastError();
 	if($wasError) {
 		echo $wasError['code'] . ':' . $wasError['message'];
 	}
+	
+	// Creacion de Actividad Calendario en VTIGER
+	
+	$manyana = time() + (24 * 60 * 60);
+	$mayanadiezmin = $mayana + (10 * 60);
+	$programdate = date('Y',$manyana)."-".date('m',$manyana)."-".date('d',$manyana);
+	$programhour = date('H',$manyana).":".date('i',$manyana);
+	$nextprogramhour = date('H',$mayanadiezmin).":".date('i',$mayanadiezmin);
+	
+	$module = 'Calendar';
+	$record = $client->doCreate($module, 
+			Array(	'assigned_user_id' => $useridvtiger, 
+					'date_start' => $programdate,
+					'time_start' => $programhour, 
+					'time_end' => $nextprogramhour,
+					'due_date' => $programdate,
+					'parent_id' => $potentialid,
+					'contact_id' => $vtigerid,
+					'eventstatus' => 'Planned',
+					'taskstatus' => 'Not Started',
+					'priority' => 'High',
+					'sendnotification' => '1',
+					'activitytype' => 'Call',
+					'visibility' => 'Private',
+					'duration_hours' => '0',
+					'duration_minutes' => '10',
+					'reminder_time' => '30',
+					'subject' => 'Llamada Seguimiento. Movil: '.$movil_cliente.' - Fijo: '.$fijo_cliente ));
  	
  	// Insercion de Oferta en Automotis
  	

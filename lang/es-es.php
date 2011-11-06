@@ -44,6 +44,7 @@
  $lang_find_importe = "Precio";
  $lang_find_combustible = "Combustible";
  $lang_find_tipovo = "Tipo VO";
+ $lang_find_ubicacion = "Ubicacion";
  $lang_find_categoria = "Categoria";
  
  $lang_find_fail = "No se han encontrado vehiculos con esa seleccion";

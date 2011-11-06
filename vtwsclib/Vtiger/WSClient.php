@@ -305,6 +305,32 @@ class Vtiger_WSClient {
 		}		
 		return $resultdata[result];
 	}
+	
+		
+	/** 
+ 	* Do Update Operation 
+ 	*/ 
+ 	function doUpdate($valuemap) { 
+ 		// Perform re-login if required. 
+ 		$this->__checkLogin();
+ 	 
+		// Assign record to logged in user if not specified 
+ 		if(!isset($valuemap['assigned_user_id'])) { 
+ 			$valuemap['assigned_user_id'] = $this->_userid; 
+ 		} 
+ 		 
+ 		$postdata = Array( 
+ 			'operation'   => 'update', 
+ 			'sessionName' => $this->_sessionid, 
+ 			'element'     => $this->toJSONString($valuemap) 
+ 		); 
+ 		
+ 		$resultdata = $this->_client->doPost($postdata, true); 
+ 		if($this->hasError($resultdata)) { 
+ 	        return false; 
+ 		}                
+ 		return $resultdata[result]; 
+ 	} 
 
 	/**
 	 * Invoke custom operation
