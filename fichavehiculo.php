@@ -277,9 +277,23 @@
 	$arraycliente = mysql_fetch_array($sqlv);
 	$vtigerusu = $arraycliente['vtigerid'];
 	
+	$sqlcp = mysql_query("SELECT * FROM codigospostales WHERE cp = $cp_cliente");
+	$arraycps = mysql_fetch_array($sqlcp);
+	$localidad_cliente = $arraycps['poblacion'];
+	
 	$codigousuario = "4x".$vtigerusu; 
 	$contact = $client->doRetrieve($codigousuario); 
-	$update_client = array('mailingstreet' => $direccion_cliente, 'birthday' => $fechanacimiento);
+	$update_client = array(	'mailingstreet' => $direccion_cliente, 
+							'birthday' => $fechanacimiento,
+							'firstname'=>$nombre_cliente, 
+							'lastname' => $apellidos_cliente,
+							'mailingzip'=>$cp_cliente,
+							'mobile'=>$movil_cliente,
+							'phone' => $fijo_cliente,
+							'email' => $email_cliente,
+							'salutation'=>$codigocortesia_cliente,
+							'mailingcity' => $localidad_cliente,
+							);
 	 
 	foreach($update_client as $key => $value)
 	{ 
@@ -350,6 +364,129 @@
 		}
 		include("footer.php");
  } 
+ 
+ 
+ elseif (isset ($_POST['ventasubmit']))
+ {
+	include("introducirventa.php"); 	
+	include("footer.php");
+ } 
+ 
+ elseif (isset ($_POST['inventasubmit']))
+ {
+ 	
+ 	$usuarioventa = $_SESSION['userid'];
+ 	$idreserva = $_POST['idreserva'];
+ 	$idvehiculo = $_POST['idvehiculo'];
+ 	$idcliente = $_POST['idcliente'];
+ 	
+ 	$refentrega = $_POST['refentrega'];
+ 	$fechaentrega = $_POST['anyoentrega']."-".$_POST['mesentrega']."-".$_POST['diaentrega'];
+ 	$impentrega = $_POST['impentrega'];
+ 	
+ 	$maxapuntes = $_POST['maxapuntes'];
+ 	
+ 	for ($i=1;$i<=$maxapuntes;$i++)
+ 	{
+ 		$ref[$i] = $_POST['ref'.$i];
+ 		$fecha[$i] = $_POST['anyo'.$i]."-".$_POST['mes'.$i]."-".$_POST['dia'.$i];
+ 		$importe[$i] = $_POST['importe'.$i];
+ 	}
+ 	
+ 	$nomfinanciera = $_POST['nomfinanciera'];
+ 	$impfinanciera = $_POST['impfinanciera'];
+ 	$garantia = $_POST['garantia'];
+ 	$cancelacion = $_POST['cancelacion'];
+ 	$cuentacancelacion = $_POST['bancocancelacion']."-".$_POST['entidadcancelacion']."-".$_POST['dccancelacion']."-".$_POST['codigocancelacion'];
+ 	$devolucion = $_POST['devolucion'];
+ 	
+ 	$matriculaentrega = $_POST['$matriculaentrega'];
+ 	
+ 	$sqltas = mysql_query("SELECT * FROM tasaciones WHERE (matricula = '$matriculaentrega' AND usuario = '$usuarioventa'");
+ 	$arraytasacion = mysql_fetch_array($sqltas);
+ 	
+ 	if ($arraytasacion['esfuerzocomercial3'])
+		$esfuerzocomercial = $arraytasacion['esfuerzocomercial3'];
+	elseif ($arraytasacion['esfuerzocomercial2'])
+		$esfuerzocomercial = $arraytasacion['esfuerzocomercial2'];
+	else
+		$esfuerzocomercial = $arraytasacion['esfuerzocomercial1'];
+
+	$valortasacion = $esfuerzocomercial - $arraytasacion['totalreacondicionamiento'] + $arraytasacion['valormercado'];
+  	
+	// CREACION Venta con datos de la reserva en Automotis
+ 	
+ 	$sql = "INSERT INTO ventas (reserva, refentrega, fechaentrega, impentrega, ref1, fecha1, importe1, ref2, fecha2, importe2, 
+ 			ref3, fecha3, importe3, ref4, fecha4, importe4, ref5, fecha5, importe5, nomfinanciera, impfinanciera, tasacion,
+ 			garantia, cancelacion, cuentacancelacion, devolucion, usuario, fechaventa )
+	 			VALUES ('$idreserva', '$refentrega', '$fechaentrega', '$impentrega', '".$ref[1]."', '".$fecha[1]."', '".$importe[1]."',
+	 			'".$ref[2]."', '".$fecha[2]."', '".$importe[2]."', '".$ref[3]."', '".$fecha[3]."', '".$importe[3]."',
+	 			'".$ref[4]."', '".$fecha[4]."', '".$importe[4]."', '".$ref[5]."', '".$fecha[5]."', '".$importe[5]."',
+	 			'$nomfinanciera', '$impfinanciera', '$tasacion', '$garantia', '$cancelacion', '$cuentacancelacion',
+	 			'$devolucion', '$usuarioventa', now())";
+	 	
+	 	if (!(mysql_query($sql,$conexion)))
+		{
+			die('Error: '.mysql_error());
+		}
+		else
+		{
+			
+			// ENVIO DE EMAIL CON LA VENTA
+			
+			$sql2 = mysql_query("SELECT * FROM usuarios WHERE userid = '$usuarioventa'");
+			$arrayusuario = mysql_fetch_array($sql2);
+			$nombreusuario = $arrayusuario['nombre'];
+			
+			$sql3 = mysql_query("SELECT * FROM vehiculos WHERE id = '$idvehiculo'");
+			$arrayvehiculo = mysql_fetch_array($sql3);
+			$matricula = $arrayvehiculo['matricula'];
+			
+			$sql4 = mysql_query("SELECT * FROM clientes WHERE id = '$idcliente'");
+			$arraycliente = mysql_fetch_array($sql4);
+			
+			$importetotal = $impentrega + $imp1 + $imp2 + $imp3 + $imp4 + $imp5 + $impfinanciera + $valortasacion;
+			
+
+			
+			$cabeceras  = "MIME-Version: 1.0\r\n";
+			$cabeceras .= "Content-type: text/html; charset=UTF-8\r\n";
+			$cabeceras .= "To: $adminname <$adminemail>\r\n";
+			$cabeceras .= "From: Peugeot Ibericar <$adminemail>\r\n";
+
+			$asunto = "Venta de ".$matricula." por ".$nombreusuario;
+
+			$mensaje = "Datos de la Venta:<br><br>
+						Tipo Cliente :".$arraycliente['tipo']."<br>
+						Codigo Cortesia Cliente: ".$arraycliente['codigocortesia']."<br>
+						Nombre Cliente: ".$arraycliente['nombre']."<br>
+						Apellido Cliente: ".$arraycliente['apellidos']."<br>
+						Direccion Cliente: ".$arraycliente['direccion']."<br>
+						CP Cliente: ".$arraycliente['cp']."<br>
+						DNI Cliente: ".$arraycliente['dni']."<br>
+						F.Nacimiento Cliente: ".$arraycliente['fechanacimiento']."<br>
+						Movil Cliente: ".$arraycliente['movil']."<br>
+						Fijo Cliente: ".$arraycliente['fijo']."<br>
+						E-Mail Cliente: ".$arraycliente['email']."<br>
+						Matricula Vehiculo: $matricula <br>
+						Usuario de la Venta: $nombreusuario <br>
+						Importe de la Venta: $importetotal <br>
+						Vehiculo Entrega: ".$arraytasacion['marca']." ".$arraytasacion['modelo']."<br> 
+						Importe Garantia: $garantia <br>
+						Cancelacion al Banco: $importetotal <br>
+						Cuenta Cancelacion: $cuentacancelacion <br>
+						Importe de la Cancelacion: $cancelacion <br>
+						Importe de la Devolucion Cliente: $devolucion <br>";
+								
+	
+		    mail ($adminemail,$asunto,$mensaje,$cabeceras);
+			
+			$numventa = mysql_insert_id();
+			
+			echo "<a target='_blank' href='imprimirventa.php?reserva=".$numventa."'> Imprimir Venta</a> <br><br>";
+		}
+		include("footer.php");
+ }  
  
  elseif (isset ($_POST['subastasubmit']))
  {
@@ -555,6 +692,23 @@
 								 	echo "</form>";
 									echo "</td>";
 								} 
+							}
+							else
+							{
+								$arrayreservaactiva = mysql_fetch_row($sql3);
+								$idreserva = $arrayreservaactiva['reserva'];
+								$sql4 = mysql_query("SELECT * FROM reservas WHERE id = '$idreserva'");
+								$arrayreserva = mysql_fetch_row($sql4);
+								if ($_SESSION['userid'] == $arrayreserva['usuario'])
+								{
+									echo "<td>";	 
+								 	echo "<form method='post' action='fichavehiculo.php'>
+								 	<input type='hidden' name='idreserva' value='".$idreserva."'>
+								 	<input type=submit name='ventasubmit' value='Venta'>";
+								 	echo "</form>";
+									echo "</td>";
+								}
+								 
 							}
 							echo "</tr>";
 						}
