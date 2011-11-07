@@ -61,19 +61,19 @@
 		</tr>
 		
 		<tr>
-			<td>Codigo Postal Cliente:</td><td><?php echo $arraycliente['cp']; ?>></td>
+			<td>Codigo Postal Cliente:</td><td><?php echo $arraycliente['cp']; ?></td>
 			<td>Direccion Postal:</td><td> <?php echo $arraycliente['direccion']; ?></td>
 			
 		</tr>
 		
 		<tr>
 			<td>DNI:</td><td> <?php echo $arraycliente['dni']; ?></td>
-			<td>F.Nacimiento:</td><td> <?php echo $arraycliente['fechanacimiento']; ?></td>
+			<td>F.Nacimiento:</td><td> <?php echo fecha_normal($arraycliente['fechanacimiento']); ?></td>
 		</tr>
 	
 	</table><br>
 	
-	<table border="0" align ="center">
+	<table border="1" align ="center">
 		
 		<tr>
 			<th colspan='3'>Datos Economicos</th>
@@ -121,7 +121,7 @@
 		</tr>
 		<tr>
 			<td>Entrega Vehiculo:</td>
-			<td>Matricula</td>
+			<td align=right>Matricula</td>
 			<td><input type='text' name='matriculaentrega' value='' size=20 maxlength='20'></td>
 		</tr>
 		
@@ -163,6 +163,3 @@
 		
 	</table>
 </form>
-
- 
-?>

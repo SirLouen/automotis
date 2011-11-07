@@ -400,10 +400,11 @@
  	$cuentacancelacion = $_POST['bancocancelacion']."-".$_POST['entidadcancelacion']."-".$_POST['dccancelacion']."-".$_POST['codigocancelacion'];
  	$devolucion = $_POST['devolucion'];
  	
- 	$matriculaentrega = $_POST['$matriculaentrega'];
+ 	$matriculaentrega = $_POST['matriculaentrega'];
  	
- 	$sqltas = mysql_query("SELECT * FROM tasaciones WHERE (matricula = '$matriculaentrega' AND usuario = '$usuarioventa'");
+ 	$sqltas = mysql_query("SELECT * FROM tasaciones WHERE (matricula LIKE '$matriculaentrega' AND usuario = '$usuarioventa')");
  	$arraytasacion = mysql_fetch_array($sqltas);
+ 	$tasacion = $arraytasacion['id'];
  	
  	if ($arraytasacion['esfuerzocomercial3'])
 		$esfuerzocomercial = $arraytasacion['esfuerzocomercial3'];
@@ -661,7 +662,7 @@
 						$sql = mysql_query("SELECT * FROM ofertas WHERE vehiculo = $id ORDER BY id DESC");
 						$filas = mysql_num_rows($sql);
 						echo "<tr>";
-						echo "<td>Oferta</td><td>Usuario</td><td>Total</td><td>Imprimir</td>";
+						echo "<td>Oferta</td><td>Usuario</td><td>Total</td><td>Imprimir</td><td>Res/Ven</td>";
 						echo "</tr>";
  	
 						for($i=0;$i<$filas&&$i<$maxofertas;$i++)
@@ -679,7 +680,9 @@
 							echo "<td><a target='_blank' href='imprimiroferta.php?oferta=".$arrayofertas['id']."'> Imprimir Oferta</a></td>";
 							
 							// Comprobar si ya esta reservado
-							$sql3 = mysql_query("SELECT vehiculo FROM reservas_activas WHERE vehiculo = '$id'");
+							$sql3 = mysql_query("SELECT * FROM reservas_activas WHERE vehiculo = '$id'");
+							$arrayreservaactiva = mysql_fetch_array($sql3);
+							
 							if (mysql_num_rows($sql3) == 0)
 							{
 								if ($_SESSION['userid'] == $arrayofertas['usuario']) 
@@ -695,11 +698,12 @@
 							}
 							else
 							{
-								$arrayreservaactiva = mysql_fetch_row($sql3);
+								
 								$idreserva = $arrayreservaactiva['reserva'];
 								$sql4 = mysql_query("SELECT * FROM reservas WHERE id = '$idreserva'");
-								$arrayreserva = mysql_fetch_row($sql4);
-								if ($_SESSION['userid'] == $arrayreserva['usuario'])
+								$arrayreserva = mysql_fetch_array($sql4);
+								
+								if ($_SESSION['userid'] == $arrayofertas['usuario'])
 								{
 									echo "<td>";	 
 								 	echo "<form method='post' action='fichavehiculo.php'>
